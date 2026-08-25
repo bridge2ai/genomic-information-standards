@@ -13,8 +13,8 @@ This directory provides guidance on community-recognized metadata standards, ont
 | Ontology Lookup Service (OLS4) | Search interface for biomedical ontologies. |
 | Ontobee | Linked ontology browser and term lookup service. |
 | GA4GH Variation Representation Specification (VRS) | Standard for computational representation of genomic variation. |
-| Refget | Standardized identifiers and retrieval for reference sequences. |
-| GA4GH Sequence Collections | Standardized collections of reference sequences. |
+| Refget Sequences | GA4GH standard for content-derived checksum identifiers for individual reference sequences, enabling reproducible reference lookup independent of filename or format. https://ga4gh.github.io/refget/sequences/ |
+| Refget Sequence Collections | Extends Refget Sequences to whole collections (e.g., a reference genome assembly), producing a single digest identifying an exact set of sequence names, lengths, and content. JSON Schema definitions available. https://ga4gh.github.io/refget/seqcols/ |
 | W3C PROV | Standard for representing computational provenance. |
 | RO-Crate | Standard for packaging research objects and associated metadata. |
 | ORCID | Persistent identifiers for researchers. |
