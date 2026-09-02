@@ -1,0 +1,2 @@
+80f18efa283d953cfc615d30dd01b1ff80debcc46f52042b942da783acd48da2  HG002_GRCh38_CMRG_smallvar_v1.00.vcf.gz
+6ea6b94a6f6e4178fe367c821ba05df33fa75e1bd08abf79abebcd3c6538f6cd  HG002_GRCh38_CMRG_smallvar_v1.00.vcf.gz.tbi
