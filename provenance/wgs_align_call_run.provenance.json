@@ -1,0 +1,85 @@
+{
+  "_disclaimer": "ILLUSTRATIVE / SYNTHETIC. Example provenance for the Bridge2AI GIST implementation resources (arXiv:2512.11519). No values derive from human subjects. run_id, checksums, container digests, and timestamps are placeholders. The GRCh38 GA4GH Refget seqcol digest is real (resolvable).",
+  "workflow_run": {
+    "run_id": "<uuid>",
+    "ended": "2026-01-15T04:22:10Z",
+    "workflow": {
+      "name": "wgs-align-call",
+      "version": "2.3.1",
+      "commit": "<git sha>",
+      "engine": "nextflow 24.04.0",
+      "random_seed": "<pipeline RNG seed>"
+    },
+    "agent": {
+      "center": "B1",
+      "operator_orcid": "https://orcid.org/0000-0000-0000-0000"
+    },
+    "reference_set": {
+      "label": "GRCh38 primary assembly, UCSC naming, 25 sequences in seqcol order: chr1-chr22, chrM, chrX, chrY",
+      "seqcol_digest": "Ba88PY52_qeifhJrgUXyin6UITdXNsg3",
+      "manifest_digest": "sha256:<lock-digest>"
+    },
+    "steps": [
+      {
+        "id": "align",
+        "activity": "sequence alignment",
+        "tool": {
+          "name": "bwa-mem",
+          "tool_id": "biotools:bwa",
+          "version": "0.7.17",
+          "container": "sha256:<digest>"
+        },
+        "used": [
+          {
+            "id": "B1-0001_R1.fastq.gz",
+            "checksum": "sha256:<digest>"
+          },
+          {
+            "id": "B1-0001_R2.fastq.gz",
+            "checksum": "sha256:<digest>"
+          }
+        ],
+        "generated": [
+          {
+            "id": "B1-0001.cram",
+            "checksum": "sha256:<digest>",
+            "reference_seqcol": "Ba88PY52_qeifhJrgUXyin6UITdXNsg3"
+          }
+        ],
+        "parameters": "-M -K 100000000"
+      },
+      {
+        "id": "call",
+        "activity": "germline variant calling",
+        "tool": {
+          "name": "gatk-haplotypecaller",
+          "tool_id": "biotools:gatk",
+          "version": "4.4.0.0",
+          "container": "sha256:<digest>"
+        },
+        "used": [
+          {
+            "id": "B1-0001.cram",
+            "checksum": "sha256:<digest>"
+          }
+        ],
+        "generated": [
+          {
+            "id": "B1-0001.g.vcf.gz",
+            "checksum": "sha256:<digest>",
+            "vcf_version": "4.3"
+          }
+        ],
+        "parameters": "--ploidy 2 -ERC GVCF"
+      }
+    ],
+    "qc_gate": {
+      "contamination_freemix": {
+        "value": 0.005,
+        "max": 0.02
+      },
+      "sex_concordance": "concordant",
+      "verdict": "pass"
+    }
+  }
+}

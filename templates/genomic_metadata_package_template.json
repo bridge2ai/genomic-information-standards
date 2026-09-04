@@ -1,0 +1,261 @@
+{
+  "_disclaimer": "TEMPLATE (no data). A blank metadata package for the Bridge2AI GIST implementation resources (arXiv:2512.11519). All values are <placeholders>.",
+  "prefixes": {
+    "UBERON": "http://purl.obolibrary.org/obo/UBERON_",
+    "OBI": "http://purl.obolibrary.org/obo/OBI_",
+    "NCIT": "http://purl.obolibrary.org/obo/NCIT_",
+    "MONDO": "http://purl.obolibrary.org/obo/MONDO_",
+    "HP": "http://purl.obolibrary.org/obo/HP_",
+    "EFO": "http://www.ebi.ac.uk/efo/EFO_",
+    "GSSO": "http://purl.obolibrary.org/obo/GSSO_",
+    "LOINC": "https://loinc.org/",
+    "HGNC": "https://bioregistry.io/hgnc:",
+    "ORCID": "https://orcid.org/"
+  },
+  "metadata_package": {
+    "package_id": "<namespace:sample-id>",
+    "schema_version": "<x.y.z>",
+    "study": {
+      "bioproject": "<BioProject accession | ->",
+      "assay": "<whole genome sequencing | whole exome sequencing | targeted panel>",
+      "assay_id": "<OBI:0002117 WGS | OBI:0002118 WES | NCIT:C173599 panel>",
+      "contact_email": "<data-contact email>"
+    },
+    "subject": {
+      "subject_id": "<de-identified subject id>",
+      "key_clinical_diagnosis": {
+        "label": "<diagnosis>",
+        "id": "<MONDO CURIE>"
+      },
+      "sex_assigned_at_birth": "<male | female | ...>",
+      "pathological_state": "<affected | unaffected | ...>"
+    },
+    "sample": {
+      "sample_id": "<id>",
+      "biosample": "<BioSample accession | ->",
+      "specimen_type": {
+        "label": "<tissue>",
+        "id": "<UBERON CURIE>"
+      },
+      "biospecimen_type": "<whole blood | saliva | ...>",
+      "analyte": {
+        "label": "genomic DNA",
+        "id": "EFO:0008479"
+      },
+      "collection_method": {
+        "label": "<method>",
+        "id": "<CURIE>"
+      },
+      "sampling_protocol": "<protocol id / URI>",
+      "collection_date": "<ISO-8601 date | ->",
+      "collection_location": "<generalized location | ->",
+      "storage_conditions": "<e.g. -80C | ->",
+      "collection_site": "<generalized site id>"
+    },
+    "sequencing": {
+      "platform": "<platform>",
+      "instrument_model": "<SRA/ENA INSTRUMENT_MODEL term>",
+      "sbs_chemistry_channels": "<1 | 2 | 4>",
+      "library_source": "<GENOMIC | TRANSCRIPTOMIC | ...>",
+      "library_strategy": "<WGS | WXS | Targeted-Capture>",
+      "library_selection": "<RANDOM | PCR | Hybrid Selection>",
+      "library_construction": "<PCR-free | PCR-plus | hybridization capture | ->",
+      "library_preparation": "<library / capture kit>",
+      "unique_molecular_identifiers": "<true | false>",
+      "sequencing_method": "<WGS | WXS | Targeted | ...>",
+      "library_layout": "<PAIRED | SINGLE>",
+      "read_length_bp": "<int>",
+      "target_mean_coverage_x": "<int>",
+      "sequencing_date": "<ISO-8601 date | ->",
+      "sequencing_location": "<generalized location | ->"
+    },
+    "capture": {
+      "kit": "<capture kit + version>",
+      "target_regions_bed": "<path to target-regions BED (GRCh38)>",
+      "target_regions_checksum": "sha256:<digest>",
+      "target_size_mb": "<f>"
+    },
+    "panel": {
+      "name": "<panel name>",
+      "version": "<vX.Y>",
+      "gene_count": "<int>",
+      "genes_example": [
+        {
+          "symbol": "<SYMBOL>",
+          "hgnc": "<HGNC CURIE>"
+        }
+      ],
+      "target_regions_bed": "<path to panel BED (GRCh38)>",
+      "target_regions_checksum": "sha256:<digest>"
+    },
+    "reference_assembly": {
+      "label": "<assembly label with exact sequence order, e.g. GRCh38 ... chr1-chr22, chrM, chrX, chrY>",
+      "seqcol_digest": "<GA4GH seqcol top-level digest, e.g. Ba88PY52_qeifhJrgUXyin6UITdXNsg3>",
+      "source_uri": "<URI of the exact reference FASTA used>",
+      "source_checksum": "md5:<fasta-md5>"
+    },
+    "processing": {
+      "alignment": {
+        "tool": "<tool>",
+        "tool_id": "<biotools:slug | EDAM>",
+        "version": "<x.y.z>",
+        "container": "sha256:<digest>",
+        "parameters": "<args>"
+      },
+      "variant_calling": {
+        "tool": "<tool>",
+        "tool_id": "<biotools:slug | EDAM>",
+        "version": "<x.y.z>",
+        "container": "sha256:<digest>",
+        "parameters": "<args>"
+      },
+      "analyses_performed": "<e.g. germline SNV/indel calling>",
+      "read_mapping_quality": "<e.g. MAPQ>=20 retained>",
+      "deviations": "<protocol deviations | none>",
+      "random_seed": "<pipeline RNG seed>",
+      "processing_date": "<ISO-8601 date | ->",
+      "processing_location": "<generalized location | ->",
+      "workflow": {
+        "engine": "<engine>",
+        "version": "<x.y.z>",
+        "run_id": "<uuid>",
+        "commit_sha": "<git sha>",
+        "provenance": "<path to W3C PROV record>"
+      }
+    },
+    "sequence_data": {
+      "fastq": [
+        {
+          "file": "<R1.fastq.gz>",
+          "checksum": "sha256:<digest>"
+        },
+        {
+          "file": "<R2.fastq.gz>",
+          "checksum": "sha256:<digest>"
+        }
+      ],
+      "cram": {
+        "file": "<sample.cram>",
+        "checksum": "sha256:<digest>",
+        "reference_seqcol": "<seqcol digest>"
+      },
+      "reference_fasta": {
+        "file": "<GRCh38.fa>",
+        "checksum": "md5:<digest>"
+      },
+      "feature_annotation": {
+        "file": "<annotation.gff3.gz>",
+        "format": "GFF3",
+        "checksum": "sha256:<digest>"
+      }
+    },
+    "variant_callset": {
+      "file": "<sample.g.vcf.gz>",
+      "vcf_version": "<4.2 | 4.3>",
+      "checksum": "sha256:<digest>",
+      "normalization": "fully-justified (GA4GH VRS)",
+      "variant_count": "<int>",
+      "snv_count": "<int>",
+      "indel_count": "<int>",
+      "inferred_sex_karyotype": "<XX | XY | ...>",
+      "variant_representation": [
+        {
+          "vrs_id": "<ga4gh:VA.* computed against the seqcol-pinned reference>",
+          "hgvs_g": "<GRCh38 g. HGVS expression>",
+          "variant_quality": "<QUAL>",
+          "total_depth": "<DP>",
+          "ref_supporting_reads": "<AD[0]>",
+          "alt_supporting_reads": "<AD[1]>"
+        }
+      ],
+      "reference_stamps": {
+        "gnomad": "<release>",
+        "clinvar": "<snapshot date>",
+        "dbnsfp": "<release>"
+      }
+    },
+    "genetic_ancestry": {
+      "method": "<e.g. PCA projection onto 1000 Genomes>",
+      "superpop_fractions": {
+        "AFR": "<f>",
+        "AMR": "<f>",
+        "EAS": "<f>",
+        "EUR": "<f>",
+        "SAS": "<f>"
+      },
+      "top_pcs": [
+        "<pc1>",
+        "<pc2>",
+        "<pc3>"
+      ]
+    },
+    "qc": {
+      "mean_coverage_x": "<f>",
+      "callable_fraction_ge10x_nonN": "<f>",
+      "contamination_freemix": "<f>",
+      "human_read_fraction": "<f>",
+      "duplicate_rate": "<f>",
+      "ti_tv": "<f>",
+      "sex_concordance": "<concordant | discordant>"
+    },
+    "phenotype": {
+      "phenopacket": "<path to GA4GH Phenopacket v2 for this subject>",
+      "phenotypes_ref": "NCIT:C16977",
+      "diseases": [
+        {
+          "term": {
+            "label": "<disease>",
+            "id": "<MONDO CURIE>"
+          }
+        }
+      ],
+      "reported_sex": {
+        "label": "<Male | Female>",
+        "id": "<NCIT:C20197 | NCIT:C16576>"
+      },
+      "measure_count": "<int>",
+      "example_measurements": [
+        {
+          "assay": {
+            "label": "<assay>",
+            "id": "<LOINC CURIE>"
+          },
+          "value": {
+            "quantity": {
+              "value": "<N>",
+              "unit": {
+                "label": "Score",
+                "id": "NCIT:C25338"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "provenance": {
+      "generated_by": {
+        "orcid": "<ORCID URL>",
+        "role": "<role>"
+      },
+      "generated_at": "<ISO-8601 UTC>",
+      "reference_manifest_digest": "sha256:<digest>",
+      "pipeline_commit_sha": "<git sha>",
+      "prov_record": "<path to W3C PROV record>"
+    },
+    "analysis_covariates": {
+      "site": "<site>",
+      "specimen_type": "<blood | saliva | ...>",
+      "sbs_chemistry_channels": "<1 | 2 | 4>",
+      "aligner": "<tool>",
+      "variant_caller": "<tool>",
+      "mean_coverage_x": "<f>",
+      "contamination_freemix": "<f>",
+      "human_read_fraction": "<f>",
+      "ancestry_pc": [
+        "<pc1>",
+        "<pc2>",
+        "<pc3>"
+      ]
+    }
+  }
+}
