@@ -13,18 +13,23 @@ The complete upstream CRAM is not included because of its size. The repository i
 | Biosample | SAME123392 |
 | Organism | *Homo sapiens* |
 | Population | Utah residents with Northern and Western European ancestry (CEPH) |
+| Biospecimen and library preparation | Not reported by upstream source |
+| Additional sample provenance | Collection, preparation, and storage details not reported by upstream source |
 | Sequencing platform | Oxford Nanopore Technologies |
+| Sequencing instrument model | Not reported by upstream source |
+| Sequencing method | Oxford Nanopore long-read whole-genome sequencing |
 | Reference assembly | GRCh38 |
 | Upstream distributor | International Genome Sample Resource / 1000 Genomes |
 | Upstream CRAM | `NA12878.hg38.cram` |
 | Upstream index | `NA12878.hg38.cram.crai` |
 | Upstream header | `NA12878.hg38.header.sam` |
+| Upstream processing details | Aligned with minimap2 2.26 using the `map-ont` preset |
 | Regional example | `NA12878.ONT.hg38.chr20_10000000-10100000.cram` |
 | Regional index | `NA12878.ONT.hg38.chr20_10000000-10100000.cram.crai` |
 | Exemplar interval | `chr20:10000000-10100000` |
 | Sample metadata | `igsr_NA12878_metadata.tsv` |
 | Data-use information | `data reuse policy.txt` |
-| Retrieval date | September 1, 2026 |
+| Retrieval date | `2026-09-01T09:30:00Z` |
 | Integrity | SHA-256 values recorded with the validation outputs |
 | Validation software | `samtools` 1.24 |
 | Modifications | The regional CRAM and CRAI are derived from the upstream CRAM; the header is an extracted metadata artifact |
