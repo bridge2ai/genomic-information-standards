@@ -13,7 +13,7 @@ This example is dervied from the NIST Genome in a Bottle HG002 Challenging Medic
 | Variant file          | `HG002_GRCh38_CMRG_smallvar_v1.00.vcf.gz`                         |
 | Index                 | `HG002_GRCh38_CMRG_smallvar_v1.00.vcf.gz.tbi`                     |
 | Benchmark regions     | `HG002_GRCh38_CMRG_smallvar_v1.00.bed`                            |
-| Retrieval date        | 9/1/2026                                                          |
+| Retrieval date        | `2026-09-01T09:30:00`                                             |
 | Integrity             | SHA-256 values in `validation/sha256sums.txt`                     |
 | Validation software   | Recorded in `validation/bcftools-version.txt`                     |
 | Modifications         | None to upstream files; derived artifacts documented separately   |
