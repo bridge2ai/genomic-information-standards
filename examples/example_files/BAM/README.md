@@ -38,17 +38,21 @@ curl \
 | Dataset | NIST Genome in a Bottle HG002 Illumina 2 × 250 bp sequencing |
 | Sample | HG002 / NA24385 |
 | Organism | *Homo sapiens* |
+| Biospecimen and library preparation | Not reported by upstream source |
+| Additional sample provenance | Collection, preparation, storage, and sequencing details not reported by upstream source | 
 | Sequencing technology | Illumina |
 | Sequencing layout | Paired-end, 2 × 250 bp |
+| Sequencing instrument model | Not reported by upstream source |
 | Reference assembly | GRCh38 |
 | Alignment software | Novoalign |
+| Upstream processing details | Novoalign processing environment, parameters, date, and location not reported |
 | Upstream distributor | NIST Genome in a Bottle / NCBI |
 | Upstream BAM | `HG002.GRCh38.2x250.bam` - externally hosted; not committed |
 | Upstream index | `HG002.GRCh38.2x250.bam.bai` |
 | Regional exemplar | `HG002.GRCh38.2x250.chr20_10000000-10100000.bam` |
 | Regional index | `HG002.GRCh38.2x250.chr20_10000000-10100000.bam.bai` |
 | Exemplar interval | `chr20:10000000-10100000` |
-| Retrieval date | September 1, 2026 |
+| Retrieval date | "2026-09-04T09:30:00Z" |
 | Integrity | SHA-256 values recorded with the validation outputs |
 | Validation software | Record the samtools version used for validation |
 | Modifications | Regional BAM and BAI derived from the unmodified upstream alignment |
