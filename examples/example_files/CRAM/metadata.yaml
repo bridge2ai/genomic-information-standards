@@ -1,0 +1,151 @@
+prefixes:
+  NCBITaxon: "https://identifiers.org/taxonomy:"
+  BioSample: "https://identifiers.org/biosample:"
+  biotools: "https://bio.tools/"
+
+metadata_package:
+  package_id: "GIST-CRAM-EX:0001"
+  schema_version: "0.1.0"
+  title: "NA12878 Oxford Nanopore GRCh38 regional CRAM example"
+  resource_type: "sequence alignment"
+  format: "CRAM"
+  description: >-
+    Compact regional CRAM derived from the International Genome Sample
+    Resource Oxford Nanopore alignment for NA12878 against GRCh38.
+
+  subject:
+    subject_id: "NA12878"
+    biosample: "BioSample:SAME123392"
+    organism: { label: "Homo sapiens", id: "NCBITaxon:9606" }
+    population_label: "Utah residents (CEPH) with Northern and Western European ancestry"
+    related_samples:
+      father: "NA12891"
+      mother: "NA12892"
+    phenotype: null
+    phenotype_note: "No phenotype or clinical interpretation is asserted by this file exemplar."
+
+  study:
+    project: "1000 Genomes / International Genome Sample Resource"
+    data_collection: "1KG_ONT_VIENNA"
+    assay: "Oxford Nanopore whole-genome sequencing"
+    sample_page: "https://www.internationalgenome.org/data-portal/sample/NA12878"
+    data_reuse_policy: "data reuse policy.txt"
+
+  sequencing:
+    platform: "Oxford Nanopore Technologies"
+    platform_code: "ONT"
+    library_layout: "SINGLE"
+    read_groups:
+      - id: "NA12878_PAI05620_046aeac5"
+        library: "NA12878"
+        platform: "ONT"
+        platform_unit: "PAI05620"
+        sample: "NA12878"
+      - id: "NA12878_PAI05620_899aff71"
+        library: "NA12878"
+        platform: "ONT"
+        platform_unit: "PAI05620"
+        sample: "NA12878"
+
+  reference_assembly:
+    label: "GRCh38"
+    sequence_naming: "UCSC-style chr names"
+    embedded_metadata: "@SQ records contain sequence names, lengths, and M5 sequence MD5 checksums"
+    producer_reference_uri: "/scratch/rausch/remap2/hg38.fa"
+    producer_reference_uri_resolvable: false
+    portability_note: >-
+      The producer-local reference path is retained as provenance but is not
+      portable. Consumers should resolve and verify reference sequences using
+      the @SQ M5 checksums.
+
+  processing:
+    alignment:
+      tool: "minimap2"
+      tool_id: "biotools:minimap2"
+      version: "2.26-r1175"
+      parameters: "-ax map-ont -t 8 --rmq=yes --MD --cs -L"
+      evidence: "@PG records in NA12878.hg38.header.sam"
+    cram_encoding:
+      tool: "samtools sort"
+      tool_id: "biotools:samtools"
+      version: "1.16.1"
+      parameters: "-m3G --reference hg38.fa -O cram"
+    merge:
+      tool: "samtools merge"
+      tool_id: "biotools:samtools"
+      version: "1.16.1"
+      parameters: "--reference hg38.fa -O cram"
+    regional_extraction:
+      tool: "samtools"
+      tool_id: "biotools:samtools"
+      version_reference: "validation software record or README"
+      interval: "chr20:10000000-10100000"
+      coordinate_convention: "1-based, end-inclusive samtools region syntax"
+
+  files:
+    alignment:
+      file: "NA12878.ONT.hg38.chr20_10000000-10100000.cram"
+      format: "CRAM"
+      role: "regional exemplar"
+      checksum: { algorithm: "SHA-256", manifest: "validation/sha256sums.txt" }
+    index:
+      file: "NA12878.ONT.hg38.chr20_10000000-10100000.cram.crai"
+      format: "CRAI"
+      indexes: "NA12878.ONT.hg38.chr20_10000000-10100000.cram"
+      checksum: { algorithm: "SHA-256", manifest: "validation/sha256sums.txt" }
+    upstream_header:
+      file: "NA12878.hg38.header.sam"
+      role: "metadata and processing-provenance extract from the complete upstream CRAM"
+    upstream_index:
+      file: "NA12878.hg38.cram.crai"
+      role: "index for the externally hosted complete CRAM; not interchangeable with the regional CRAI"
+    sample_metadata:
+      file: "igsr_NA12878_metadata.tsv"
+    reuse_policy:
+      file: "data reuse policy.txt"
+    upstream_alignment:
+      file: "NA12878.hg38.cram"
+      committed: false
+      source_uri: "https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1KG_ONT_VIENNA/hg38/NA12878.hg38.cram"
+      index_uri: "https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1KG_ONT_VIENNA/hg38/NA12878.hg38.cram.crai"
+
+  validation:
+    structural_check: { tool: "samtools quickcheck", result: "passed; no errors reported" }
+    alignment_summary:
+      total_records: 156
+      primary_records: 136
+      secondary_records: 1
+      supplementary_records: 19
+      mapped_records: 156
+      mapped_percent: 100.0
+      duplicate_records: 0
+    regional_coverage:
+      interval: "chr20:10000000-10100000"
+      reads: 155
+      covered_bases: 99993
+      coverage_percent: 99.992
+      mean_depth: 12.834
+      mean_base_quality: 255
+      mean_mapping_quality: 59.5
+      base_quality_note: "A value of 255 can indicate unavailable or non-conventional base-quality information."
+    checksum_manifest: "validation/sha256sums.txt"
+
+  provenance:
+    upstream_organization: "International Genome Sample Resource / 1000 Genomes"
+    retrieved_at: "2026-09-01"
+    header_provenance: "NA12878.hg38.header.sam"
+    documentation: "README.md"
+
+  gist_alignment:
+    - "Stable sample and BioSample identifiers are recorded."
+    - "ONT platform, library, platform unit, and read groups are documented."
+    - "Reference names, lengths, and sequence digests are retained in @SQ records."
+    - "Software versions, command lines, and parent processing steps are retained in @PG records."
+    - "The CRAM is paired with its machine-readable CRAI index."
+    - "Sample metadata, reuse policy, checksums, and quality-control results are linked."
+
+  limitations:
+    - "CRAM decoding may require access to the exact reference sequences identified by @SQ M5 checksums."
+    - "The producer-local reference URI is not externally resolvable."
+    - "This regional CRAM must not be used to estimate genome-wide sequencing quality."
+
