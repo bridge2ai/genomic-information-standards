@@ -1,0 +1,78 @@
+name: validate-metadata
+
+# Validates the example metadata packages against the JSON Schema, checks that
+# every YAML/JSON twin (examples, template, provenance) is semantically identical,
+# and cross-checks per-package arithmetic (snv + indel == variant_count) and
+# ancestry fractions (sum ~ 1.0).
+
+on:
+  pull_request:
+    paths:
+      - "examples/**"
+      - "templates/**"
+      - "provenance/**"
+      - "schemas/**"
+      - ".github/workflows/validate-metadata.yml"
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install validators
+        run: pip install --quiet pyyaml jsonschema
+      - name: Validate metadata
+        run: |
+          python3 - <<'PY'
+          import glob, json, sys
+          import yaml
+          from jsonschema import Draft202012Validator
+
+          schema = json.load(open("schemas/genomic_metadata_package_v0.1.0.json"))
+          validator = Draft202012Validator(schema)
+          fails = []
+
+          # YAML/JSON twin equality across examples, template, and provenance
+          twins = (sorted(glob.glob("examples/**/*.metadata.yaml", recursive=True))
+                   + sorted(glob.glob("templates/*.yaml"))
+                   + sorted(glob.glob("provenance/*.yaml")))
+          for y in twins:
+              j = y[:-5] + ".json"
+              data = yaml.safe_load(open(y))
+              try:
+                  if json.load(open(j)) != data:
+                      fails.append(f"{j}: not identical to its YAML twin")
+              except FileNotFoundError:
+                  fails.append(f"{j}: missing JSON twin")
+
+          # schema + arithmetic for the example packages
+          for y in sorted(glob.glob("examples/**/*.metadata.yaml", recursive=True)):
+              data = yaml.safe_load(open(y))
+              for e in sorted(validator.iter_errors(data), key=lambda e: list(e.path)):
+                  fails.append(f"{y}: schema: {list(e.path)}: {e.message}")
+              pkgs = data.get("metadata_packages") or (
+                  [data["metadata_package"]] if "metadata_package" in data else [])
+              if not pkgs:
+                  fails.append(f"{y}: no metadata_package(s) root key")
+                  continue
+              for p in pkgs:
+                  vc = p["variant_callset"]
+                  if vc["snv_count"] + vc["indel_count"] != vc["variant_count"]:
+                      fails.append(f'{p["package_id"]}: snv+indel != variant_count')
+                  ga = p.get("genetic_ancestry")
+                  if ga and abs(sum(ga["superpop_fractions"].values()) - 1.0) > 1e-6:
+                      fails.append(f'{p["package_id"]}: ancestry fractions do not sum to 1.0')
+              print(f"checked {y}")
+
+          if fails:
+              print("\nFAILURES:")
+              for f in fails:
+                  print("  -", f)
+              sys.exit(1)
+          print("\nAll metadata valid.")
+          PY

@@ -1,0 +1,15 @@
+# NDD gene panel v2.1 - illustrative target regions (GRCh38, UCSC chr naming).
+# Real GRCh38 gene spans (Ensembl REST, accessed 2026-09-04; 1-based -> BED 0-based half-open)
+# for the 10 genes in ../panel_example.metadata.yaml. A production capture panel lists
+# per-exon targets with padding; gene-span is used here for a compact self-verifying file.
+# reference seqcol: Ba88PY52_qeifhJrgUXyin6UITdXNsg3
+chr2	165194992	165392310	SCN2A
+chr6	33419660	33453689	SYNGAP1
+chr6	156776019	157211460	ARID1B
+chr10	87862637	87971930	PTEN
+chr12	13437941	13982138	GRIN2B
+chr14	21385193	21456126	CHD8
+chr20	50854047	50931437	ADNP
+chr22	50674407	50733212	SHANK3
+chrX	147911857	147951125	FMR1
+chrX	154021572	154137103	MECP2

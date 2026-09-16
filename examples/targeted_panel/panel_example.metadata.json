@@ -1,0 +1,245 @@
+{
+  "_disclaimer": "ILLUSTRATIVE / SYNTHETIC. Example metadata for the Bridge2AI GIST implementation resources (arXiv:2512.11519). No values derive from human subjects. Subject id, accessions, checksums, container digests, dates, panel identity, and counts are placeholders. Deliberately REAL, marked inline: the GA4GH Refget seqcol digest, the ontology and tool-registry (bio.tools) CURIEs, the ten HGNC gene ids, and the target-regions BED (real GRCh38 gene spans with a real sha256).",
+  "prefixes": {
+    "UBERON": "http://purl.obolibrary.org/obo/UBERON_",
+    "OBI": "http://purl.obolibrary.org/obo/OBI_",
+    "NCIT": "http://purl.obolibrary.org/obo/NCIT_",
+    "MONDO": "http://purl.obolibrary.org/obo/MONDO_",
+    "EFO": "http://www.ebi.ac.uk/efo/EFO_",
+    "GSSO": "http://purl.obolibrary.org/obo/GSSO_",
+    "HGNC": "https://bioregistry.io/hgnc:",
+    "ORCID": "https://orcid.org/"
+  },
+  "metadata_package": {
+    "package_id": "GIST-PANEL-EX:0001",
+    "schema_version": "0.1.0",
+    "study": {
+      "bioproject": "<BioProject accession>",
+      "assay": "targeted panel sequencing",
+      "assay_id": "NCIT:C173599"
+    },
+    "subject": {
+      "subject_id": "PANEL-0001",
+      "key_clinical_diagnosis": {
+        "label": "autism spectrum disorder",
+        "id": "MONDO:0005258"
+      },
+      "sex_assigned_at_birth": "female",
+      "pathological_state": "affected"
+    },
+    "sample": {
+      "sample_id": "PANEL-0001",
+      "biosample": "<BioSample accession>",
+      "specimen_type": {
+        "label": "blood",
+        "id": "UBERON:0000178"
+      },
+      "biospecimen_type": "whole blood",
+      "analyte": {
+        "label": "genomic DNA",
+        "id": "EFO:0008479"
+      },
+      "collection_method": {
+        "label": "blood specimen collection",
+        "id": "OBI:1110095"
+      },
+      "sampling_protocol": "<protocol id / URI>",
+      "collection_site": "B1"
+    },
+    "sequencing": {
+      "platform": "Illumina",
+      "instrument_model": "NextSeq 550",
+      "sbs_chemistry_channels": 2,
+      "library_source": "GENOMIC",
+      "library_strategy": "Targeted-Capture",
+      "library_selection": "Hybrid Selection",
+      "library_construction": "hybridization capture",
+      "library_preparation": "<panel library + capture kit>",
+      "unique_molecular_identifiers": true,
+      "sequencing_method": "Targeted",
+      "library_layout": "PAIRED",
+      "read_length_bp": 150,
+      "target_mean_coverage_x": 500,
+      "sequencing_date": "2023-08-10"
+    },
+    "panel": {
+      "name": "<neurodevelopmental-disorders panel>",
+      "version": "v2.1",
+      "gene_count": 128,
+      "genes_example": [
+        {
+          "symbol": "CHD8",
+          "hgnc": "HGNC:20153"
+        },
+        {
+          "symbol": "SCN2A",
+          "hgnc": "HGNC:10588"
+        },
+        {
+          "symbol": "SHANK3",
+          "hgnc": "HGNC:14294"
+        },
+        {
+          "symbol": "SYNGAP1",
+          "hgnc": "HGNC:11497"
+        },
+        {
+          "symbol": "ADNP",
+          "hgnc": "HGNC:15766"
+        },
+        {
+          "symbol": "ARID1B",
+          "hgnc": "HGNC:18040"
+        },
+        {
+          "symbol": "GRIN2B",
+          "hgnc": "HGNC:4586"
+        },
+        {
+          "symbol": "MECP2",
+          "hgnc": "HGNC:6990"
+        },
+        {
+          "symbol": "FMR1",
+          "hgnc": "HGNC:3775"
+        },
+        {
+          "symbol": "PTEN",
+          "hgnc": "HGNC:9588"
+        }
+      ],
+      "target_regions_bed": "targets/ndd_panel_v2.1.bed",
+      "target_regions_checksum": "sha256:f3dad78c3834f15240b4cb26d3818167f2efadb59f7d25cb8c4442eea5622cc6",
+      "target_regions_bed_note": "shipped BED = spans of the 10 example genes (~1.68 Mb); the production 128-gene exonic panel target (~0.5 Mb) is not shipped",
+      "ancestry_note": "genetic_ancestry omitted: a sub-megabase panel target is insufficient for 1000G PCA projection"
+    },
+    "reference_assembly": {
+      "label": "GRCh38 primary assembly, UCSC naming, 25 sequences in seqcol order: chr1-chr22, chrM, chrX, chrY",
+      "seqcol_digest": "Ba88PY52_qeifhJrgUXyin6UITdXNsg3",
+      "source_uri": "<URI of the exact reference FASTA used>",
+      "source_checksum": "md5:<fasta-md5>"
+    },
+    "processing": {
+      "alignment": {
+        "tool": "bwa-mem",
+        "tool_id": "biotools:bwa",
+        "version": "0.7.17",
+        "container": "sha256:<digest>",
+        "parameters": "-M"
+      },
+      "variant_calling": {
+        "tool": "gatk-haplotypecaller",
+        "tool_id": "biotools:gatk",
+        "version": "4.4.0.0",
+        "container": "sha256:<digest>",
+        "parameters": "-L <production panel target BED> --ploidy 2"
+      },
+      "read_mapping_quality": "MAPQ>=20 retained",
+      "workflow": {
+        "engine": "nextflow",
+        "version": "24.04.0",
+        "run_id": "<uuid>",
+        "commit_sha": "<git sha>",
+        "provenance": "<path to this sample's W3C PROV record (same shape as ../../provenance/)>"
+      }
+    },
+    "sequence_data": {
+      "fastq": [
+        {
+          "file": "PANEL-0001_R1.fastq.gz",
+          "checksum": "sha256:<digest>"
+        },
+        {
+          "file": "PANEL-0001_R2.fastq.gz",
+          "checksum": "sha256:<digest>"
+        }
+      ],
+      "cram": {
+        "file": "PANEL-0001.cram",
+        "checksum": "sha256:<digest>",
+        "reference_seqcol": "Ba88PY52_qeifhJrgUXyin6UITdXNsg3"
+      },
+      "reference_fasta": {
+        "file": "<GRCh38.fa>",
+        "checksum": "md5:<fasta-md5>"
+      },
+      "feature_annotation": {
+        "file": "<annotation.gff3.gz>",
+        "format": "GFF3",
+        "checksum": "sha256:<digest>"
+      }
+    },
+    "variant_callset": {
+      "file": "PANEL-0001.g.vcf.gz",
+      "vcf_version": "4.3",
+      "checksum": "sha256:<digest>",
+      "normalization": "fully-justified (GA4GH VRS)",
+      "variant_count": 214,
+      "snv_count": 193,
+      "indel_count": 21,
+      "inferred_sex_karyotype": "XX",
+      "variant_representation": [
+        {
+          "vrs_id": "<ga4gh:VA.* - compute with vrs-python against the seqcol-pinned reference>",
+          "hgvs_g": "<GRCh38 g. HGVS expression>",
+          "variant_quality": 2140.0,
+          "total_depth": 512,
+          "ref_supporting_reads": 261,
+          "alt_supporting_reads": 251
+        }
+      ],
+      "reference_stamps": {
+        "gnomad": "v4.1",
+        "clinvar": "2026-01-06",
+        "dbnsfp": "4.7a"
+      }
+    },
+    "qc": {
+      "mean_target_coverage_x": 512.4,
+      "pct_target_bases_100x": 0.996,
+      "on_target_rate": 0.885,
+      "contamination_freemix": 0.003,
+      "human_read_fraction": 0.993,
+      "duplicate_rate": 0.061,
+      "sex_concordance": "concordant"
+    },
+    "phenotype": {
+      "phenopacket": "<path to GA4GH Phenopacket v2 for this subject>",
+      "phenotypes_ref": "NCIT:C16977",
+      "diseases": [
+        {
+          "term": {
+            "label": "autism spectrum disorder",
+            "id": "MONDO:0005258"
+          }
+        }
+      ],
+      "reported_sex": {
+        "label": "Female",
+        "id": "NCIT:C16576"
+      },
+      "measure_count": 27
+    },
+    "provenance": {
+      "generated_by": {
+        "orcid": "https://orcid.org/0000-0000-0000-0000",
+        "role": "pipeline operator"
+      },
+      "generated_at": "2026-01-15T04:22:10Z",
+      "reference_manifest_digest": "sha256:<lock-digest>",
+      "pipeline_commit_sha": "<git sha>",
+      "prov_record": "<path to this sample's W3C PROV record (same shape as ../../provenance/)>"
+    },
+    "analysis_covariates": {
+      "site": "B1",
+      "specimen_type": "blood",
+      "sbs_chemistry_channels": 2,
+      "panel": "<panel name v2.1>",
+      "on_target_rate": 0.885,
+      "aligner": "bwa-mem",
+      "variant_caller": "gatk-haplotypecaller",
+      "mean_target_coverage_x": 512.4,
+      "contamination_freemix": 0.003
+    }
+  }
+}

@@ -1,0 +1,524 @@
+# =============================================================================
+# Example AI-ready metadata package(s) - Whole Genome Sequencing
+# Bridge2AI Genomic Information Standards (GIST) - companion implementation
+#
+# Accompanies the manuscript's autism-WGS use case (two sequencing centers, B1
+# and B2). The synthetic-data notice is the machine-readable `_disclaimer` field
+# below (kept in-data so it survives serialization to JSON).
+#
+# Field-level ontology anchoring follows the manuscript's Supplementary Table 1
+# where it fixes a term; a representative subset of those MUST fields is populated
+# here and the COMPLETE set is enumerated in
+# ../../templates/genomic_metadata_package_template.yaml.
+#
+# Design note (partial confounding). The use case is a PARTIAL confound: both
+# centers run mostly blood with a saliva subgroup whose proportion DIFFERS between
+# centers, B1 is all 2-channel while B2 mixes 2- and 4-channel, and only the
+# alignment/variant-calling pipeline is center-specific (BWA-MEM/GATK at B1,
+# DRAGMAP/DRAGEN at B2). The five packages spread specimen across both centers and
+# chemistry across B2 (4-channel shown on blood, so chemistry is not aliased with
+# specimen); `cohort_context` records the center-level proportions that make the
+# metadata-aware model identifiable. Genetic-ancestry values are assigned
+# arbitrarily and are unrelated to site; in the source effort ancestry varies
+# within each center.
+# =============================================================================
+
+_disclaimer: >-
+  ILLUSTRATIVE / SYNTHETIC. Example metadata for the Bridge2AI GIST implementation
+  resources (arXiv:2512.11519). No values derive from human subjects; subject ids,
+  site identities, accessions, checksums, container digests, dates, coverage and
+  variant counts, QC metrics, ancestry, and phenotype values are fabricated
+  placeholders and site identities are generalized (B1, B2). The only
+  non-synthetic identifiers, marked inline, are the GA4GH Refget seqcol digest and
+  the ontology and tool-registry (bio.tools) CURIEs. Ancestry values are assigned arbitrarily and are unrelated
+  to site.
+
+prefixes:                                   # CURIE -> base IRI (expansion = base + local id)
+  UBERON: "http://purl.obolibrary.org/obo/UBERON_"
+  OBI:    "http://purl.obolibrary.org/obo/OBI_"
+  NCIT:   "http://purl.obolibrary.org/obo/NCIT_"
+  MONDO:  "http://purl.obolibrary.org/obo/MONDO_"
+  EFO:    "http://www.ebi.ac.uk/efo/EFO_"    # NOTE: EFO does NOT use the OBO PURL base
+  GSSO:   "http://purl.obolibrary.org/obo/GSSO_"
+  LOINC:  "https://loinc.org/"
+  ORCID:  "https://orcid.org/"
+# GIST-*-EX package ids are GIST-local and non-resolving; ga4gh: is the GA4GH VRS
+# namespace (computed, content-derived identifiers with no central resolver).
+
+# Study-wide MUST fields (constant across the packages below).
+study_context:
+  contact_email: "<data-contact email>"                          # main-text MUST
+  analyses_performed: "germline SNV/indel calling"               # per FairGenomes AnalysesPerformed
+  algorithms: [ "bwa-mem 0.7.17 | dragmap 1.3.0", "gatk-haplotypecaller 4.4.0.0 | dragen 4.2.4" ]
+  random_seed: "<pipeline RNG seed>"                             # paper MUST (reproducibility)
+
+# Center-level context: the proportions that carry the statistical identifiability.
+cohort_context:
+  centers:
+    B1:
+      specimen_fractions:  { blood: 0.88, saliva: 0.12 }
+      chemistry_fractions: { "2-channel": 1.00, "4-channel": 0.00 }
+      pipeline: { aligner: "bwa-mem", variant_caller: "gatk-haplotypecaller" }
+    B2:
+      specimen_fractions:  { blood: 0.72, saliva: 0.28 }   # saliva share differs from B1 (0.12) - the lever
+      chemistry_fractions: { "2-channel": 0.62, "4-channel": 0.38 }   # B2's mix; B1 has none
+      pipeline: { aligner: "dragmap", variant_caller: "dragen" }
+
+# Reusable reference block (order-sensitive seqcol; see identifiers/refget-seqcol.md).
+_reference_grch38: &ref
+  label: "GRCh38 primary assembly, UCSC naming, 25 sequences in seqcol order: chr1-chr22, chrM, chrX, chrY"
+  seqcol_digest: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3"   # REAL GA4GH seqcol top-level digest (resolvable). Order is part of what the digest commits to.
+  seqcol_comparison: "GET /comparison/{d1}/{d2} -> array_elements.a_and_b_same_order"   # how a consumer checks two references
+  source_uri: "<URI of the exact reference FASTA used>"    # Table 3 MUST: pointer to source file
+  source_checksum: "md5:<fasta-md5>"
+  # An assembly accession is deliberately omitted: GCF_000001405.40 is GRCh38.p14
+  # (patches + alt loci, RefSeq accessions), not this 25-sequence UCSC primary set;
+  # the seqcol digest is the authority.
+
+metadata_packages:
+
+  # -- B1-0001: B1, blood, 2-channel (NovaSeq 6000), BWA-MEM/GATK -------------
+  - package_id: "GIST-WGS-EX:B1-0001"
+    schema_version: "0.1.0"
+    study: { bioproject: "<BioProject accession>", assay: "whole genome sequencing", assay_id: "OBI:0002117" }
+    subject:
+      subject_id: "B1-0001"
+      key_clinical_diagnosis: { label: "autism spectrum disorder", id: "MONDO:0005258" }   # field per NCIT:C15607
+      sex_assigned_at_birth: "male"                # per GSSO:009418 (assigned gender at birth)
+      pathological_state: "affected"               # per FairGenomes PathologicalState
+    sample:
+      sample_id: "B1-0001"
+      biosample: "<BioSample accession>"
+      specimen_type: { label: "blood", id: "UBERON:0000178" }
+      biospecimen_type: "whole blood"              # per NCIT:C70713 (biospecimen type)
+      analyte: { label: "genomic DNA", id: "EFO:0008479" }
+      collection_method: { label: "blood specimen collection", id: "OBI:1110095" }
+      sampling_protocol: "<protocol id / URI>"     # per EFO:0005518
+      collection_site: "B1"                        # generalized center id
+    sequencing:
+      platform: "Illumina"
+      instrument_model: "Illumina NovaSeq 6000"    # SRA/ENA INSTRUMENT_MODEL CV
+      sbs_chemistry_channels: 2                     # 2 = NovaSeq/NextSeq; 4 = HiSeq family
+      library_source: "GENOMIC"                     # SRA CV
+      library_strategy: "WGS"                       # SRA CV
+      library_selection: "RANDOM"                   # SRA CV
+      library_construction: "PCR-free"              # free text (NOT an SRA CV field)
+      library_preparation: "<library kit>"         # per FairGenomes NGSKits
+      unique_molecular_identifiers: false           # per EFO:0010199
+      sequencing_method: "WGS"                      # per FairGenomes SequencingMethods
+      library_layout: "PAIRED"
+      read_length_bp: 150
+      target_mean_coverage_x: 30
+      sequencing_date: "2023-05-14"                 # main-text MUST
+    reference_assembly: *ref
+    processing:
+      alignment:       { tool: "bwa-mem", tool_id: "biotools:bwa", version: "0.7.17", container: "sha256:<digest>", parameters: "-M -K 100000000" }
+      variant_calling: { tool: "gatk-haplotypecaller", tool_id: "biotools:gatk", version: "4.4.0.0", container: "sha256:<digest>", parameters: "--ploidy 2 -ERC GVCF" }
+      read_mapping_quality: "MAPQ>=20 retained"
+      workflow:        { engine: "nextflow", version: "24.04.0", run_id: "<uuid>", commit_sha: "<git sha>", provenance: "../../provenance/wgs_align_call_run.provenance.yaml" }
+    sequence_data:                                  # Table 2 MUST storage formats
+      fastq: [ { file: "B1-0001_R1.fastq.gz", checksum: "sha256:<digest>" }, { file: "B1-0001_R2.fastq.gz", checksum: "sha256:<digest>" } ]
+      cram:  { file: "B1-0001.cram", checksum: "sha256:<digest>", reference_seqcol: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3" }   # CRAM pins its reference
+      reference_fasta: { file: "<GRCh38.fa>", checksum: "md5:<fasta-md5>" }   # FASTA MUST
+      feature_annotation: { file: "<annotation.gff3.gz>", format: "GFF3", checksum: "sha256:<digest>" }   # GFF MUST
+    variant_callset:
+      file: "B1-0001.g.vcf.gz"                      # gVCF (Table 2 MUST)
+      vcf_version: "4.3"                            # gVCF min 4.2; 4.3 used
+      checksum: "sha256:<digest>"
+      normalization: "fully-justified (GA4GH VRS)"  # VRS uses fully-justified normalization, NOT left-alignment
+      variant_count: 4820000
+      snv_count: 4180000
+      indel_count: 640000                           # BWA-MEM/GATK arm (~6.5:1 SNV:indel)
+      inferred_sex_karyotype: "XY"                  # per FairGenomes GenotypicSex (from the callset)
+      variant_representation:                       # GA4GH VRS - Table 6 MUST (one illustrative allele)
+        - vrs_id: "<ga4gh:VA.* - compute with vrs-python against the seqcol-pinned reference>"
+          hgvs_g: "<GRCh38 g. HGVS expression>"
+          variant_quality: 812.3                    # QUAL
+          total_depth: 42                           # DP
+          ref_supporting_reads: 21                  # AD[0]
+          alt_supporting_reads: 21                  # AD[1]
+      reference_stamps: { gnomad: "v4.1", clinvar: "2026-01-06", dbnsfp: "4.7a" }
+    genetic_ancestry:
+      method: "PCA projection onto 1000 Genomes reference"   # ancestry field per NCIT:C176763
+      superpop_fractions: { AFR: 0.03, AMR: 0.05, EAS: 0.02, EUR: 0.88, SAS: 0.02 }   # arbitrary, unrelated to site
+      top_pcs: [ -0.011, 0.004, 0.021 ]
+    qc:
+      mean_coverage_x: 31.4                          # mosdepth
+      callable_fraction_ge10x_nonN: 0.962            # denominator is non-N reference bases
+      contamination_freemix: 0.005                   # VerifyBamID2 = within-species (human-human) contamination
+      human_read_fraction: 0.992                     # non-host DNA low for blood
+      duplicate_rate: 0.081                          # patterned NovaSeq flow cell (ExAmp)
+      ti_tv: 2.01
+      sex_concordance: "concordant"                  # phenotype.reported_sex vs variant_callset.inferred_sex_karyotype
+    phenotype:
+      phenopacket: "<path to GA4GH Phenopacket v2 for this subject>"
+      phenotypes_ref: "NCIT:C16977"                  # phenotypes field per Supp Table 1
+      diseases:
+        - term: { label: "autism spectrum disorder", id: "MONDO:0005258" }
+      reported_sex: { label: "Male", id: "NCIT:C20197" }   # self-reported/clinical sex
+      measure_count: 27
+      example_measurements:
+        - assay: { label: "ADOS-2 calibrated severity score", id: "<LOINC CURIE>" }
+          value: { quantity: { value: 7, unit: { label: "Score", id: "NCIT:C25338" } } }
+    provenance:
+      generated_by: { orcid: "https://orcid.org/0000-0000-0000-0000", role: "pipeline operator" }   # deliberately checksum-invalid: never a real iD
+      generated_at: "2026-01-15T04:22:10Z"           # processing time (may post-date sequencing)
+      reference_manifest_digest: "sha256:<lock-digest>"
+      pipeline_commit_sha: "<git sha>"
+      prov_record: "../../provenance/wgs_align_call_run.provenance.yaml"   # W3C PROV (this record is B1-0001's run)
+    analysis_covariates:
+      { site: "B1", specimen_type: "blood", sbs_chemistry_channels: 2, aligner: "bwa-mem",
+        variant_caller: "gatk-haplotypecaller", mean_coverage_x: 31.4, contamination_freemix: 0.005,
+        human_read_fraction: 0.992, ancestry_pc: [ -0.011, 0.004, 0.021 ] }
+
+  # -- B1-0002: B1, SALIVA, 2-channel (NovaSeq 6000), BWA-MEM/GATK ------------
+  #    (saliva on GOOD chemistry -> saliva is not tied to the 4-channel arm)
+  - package_id: "GIST-WGS-EX:B1-0002"
+    schema_version: "0.1.0"
+    study: { bioproject: "<BioProject accession>", assay: "whole genome sequencing", assay_id: "OBI:0002117" }
+    subject:
+      subject_id: "B1-0002"
+      key_clinical_diagnosis: { label: "autism spectrum disorder", id: "MONDO:0005258" }
+      sex_assigned_at_birth: "female"              # per GSSO:009418
+      pathological_state: "affected"
+    sample:
+      sample_id: "B1-0002"
+      biosample: "<BioSample accession>"
+      specimen_type: { label: "saliva", id: "UBERON:0001836" }
+      biospecimen_type: "saliva"                   # per NCIT:C70713
+      analyte: { label: "genomic DNA", id: "EFO:0008479" }
+      collection_method: { label: "Saliva Collection", id: "NCIT:C200883" }
+      sampling_protocol: "<protocol id / URI>"     # per EFO:0005518
+      collection_site: "B1"
+    sequencing:
+      platform: "Illumina"
+      instrument_model: "Illumina NovaSeq 6000"
+      sbs_chemistry_channels: 2
+      library_source: "GENOMIC"
+      library_strategy: "WGS"
+      library_selection: "RANDOM"
+      library_construction: "PCR-free"
+      library_preparation: "<library kit>"
+      unique_molecular_identifiers: false
+      sequencing_method: "WGS"
+      library_layout: "PAIRED"
+      read_length_bp: 150
+      target_mean_coverage_x: 30
+      sequencing_date: "2023-06-02"
+    reference_assembly: *ref
+    processing:
+      alignment:       { tool: "bwa-mem", tool_id: "biotools:bwa", version: "0.7.17", container: "sha256:<digest>", parameters: "-M -K 100000000" }
+      variant_calling: { tool: "gatk-haplotypecaller", tool_id: "biotools:gatk", version: "4.4.0.0", container: "sha256:<digest>", parameters: "--ploidy 2 -ERC GVCF" }
+      read_mapping_quality: "MAPQ>=20 retained"
+      workflow:        { engine: "nextflow", version: "24.04.0", run_id: "<uuid>", commit_sha: "<git sha>", provenance: "<path to this sample's W3C PROV record (same shape as ../../provenance/)>" }
+    sequence_data:
+      fastq: [ { file: "B1-0002_R1.fastq.gz", checksum: "sha256:<digest>" }, { file: "B1-0002_R2.fastq.gz", checksum: "sha256:<digest>" } ]
+      cram:  { file: "B1-0002.cram", checksum: "sha256:<digest>", reference_seqcol: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3" }
+      reference_fasta: { file: "<GRCh38.fa>", checksum: "md5:<fasta-md5>" }
+      feature_annotation: { file: "<annotation.gff3.gz>", format: "GFF3", checksum: "sha256:<digest>" }
+    variant_callset:
+      file: "B1-0002.g.vcf.gz"
+      vcf_version: "4.3"
+      checksum: "sha256:<digest>"
+      normalization: "fully-justified (GA4GH VRS)"
+      variant_count: 4818000
+      snv_count: 4180000
+      indel_count: 638000                           # BWA-MEM/GATK arm
+      inferred_sex_karyotype: "XX"
+      reference_stamps: { gnomad: "v4.1", clinvar: "2026-01-06", dbnsfp: "4.7a" }
+    genetic_ancestry:
+      method: "PCA projection onto 1000 Genomes reference"
+      superpop_fractions: { AFR: 0.04, AMR: 0.05, EAS: 0.03, EUR: 0.06, SAS: 0.82 }   # arbitrary
+      top_pcs: [ 0.021, 0.030, -0.004 ]
+    qc:
+      mean_coverage_x: 30.2
+      callable_fraction_ge10x_nonN: 0.949
+      contamination_freemix: 0.006                   # still low: FREEMIX is human-human, not microbial
+      human_read_fraction: 0.740                     # LOWER for saliva (non-host/microbial DNA) - the specimen signal
+      duplicate_rate: 0.121                          # saliva libraries: elevated flow-cell duplicates
+      ti_tv: 2.00
+      sex_concordance: "concordant"
+    phenotype:
+      phenopacket: "<path to GA4GH Phenopacket v2 for this subject>"
+      phenotypes_ref: "NCIT:C16977"
+      diseases:
+        - term: { label: "autism spectrum disorder", id: "MONDO:0005258" }
+      reported_sex: { label: "Female", id: "NCIT:C16576" }
+      measure_count: 27
+    provenance:
+      generated_by: { orcid: "https://orcid.org/0000-0000-0000-0000", role: "pipeline operator" }
+      generated_at: "2026-01-15T05:10:44Z"
+      reference_manifest_digest: "sha256:<lock-digest>"
+      pipeline_commit_sha: "<git sha>"
+      prov_record: "<path to this sample's W3C PROV record (same shape as ../../provenance/)>"
+    analysis_covariates:
+      { site: "B1", specimen_type: "saliva", sbs_chemistry_channels: 2, aligner: "bwa-mem",
+        variant_caller: "gatk-haplotypecaller", mean_coverage_x: 30.2, contamination_freemix: 0.006,
+        human_read_fraction: 0.740, ancestry_pc: [ 0.021, 0.030, -0.004 ] }
+
+  # -- B2-0001: B2, blood, 2-channel (NovaSeq 6000), DRAGMAP/DRAGEN -----------
+  #    (AFR-majority ancestry on GOOD chemistry -> ancestry not tied to a "worse" arm)
+  - package_id: "GIST-WGS-EX:B2-0001"
+    schema_version: "0.1.0"
+    study: { bioproject: "<BioProject accession>", assay: "whole genome sequencing", assay_id: "OBI:0002117" }
+    subject:
+      subject_id: "B2-0001"
+      key_clinical_diagnosis: { label: "autism spectrum disorder", id: "MONDO:0005258" }
+      sex_assigned_at_birth: "male"
+      pathological_state: "affected"
+    sample:
+      sample_id: "B2-0001"
+      biosample: "<BioSample accession>"
+      specimen_type: { label: "blood", id: "UBERON:0000178" }
+      biospecimen_type: "whole blood"
+      analyte: { label: "genomic DNA", id: "EFO:0008479" }
+      collection_method: { label: "blood specimen collection", id: "OBI:1110095" }
+      sampling_protocol: "<protocol id / URI>"
+      collection_site: "B2"
+    sequencing:
+      platform: "Illumina"
+      instrument_model: "Illumina NovaSeq 6000"    # B2's 2-channel arm
+      sbs_chemistry_channels: 2
+      library_source: "GENOMIC"
+      library_strategy: "WGS"
+      library_selection: "RANDOM"
+      library_construction: "PCR-free"
+      library_preparation: "<library kit>"
+      unique_molecular_identifiers: false
+      sequencing_method: "WGS"
+      library_layout: "PAIRED"
+      read_length_bp: 150
+      target_mean_coverage_x: 30
+      sequencing_date: "2023-04-20"
+    reference_assembly: *ref
+    processing:
+      alignment:       { tool: "dragmap", tool_id: null, version: "1.3.0", container: "sha256:<digest>", parameters: "--preserve-map-align-order true" }   # no bio.tools entry for DRAGMAP (checked)
+      variant_calling: { tool: "dragen", tool_id: null, version: "4.2.4", container: "sha256:<digest>", parameters: "--vc-emit-ref-confidence GVCF" }        # no bio.tools entry for DRAGEN (checked)
+      read_mapping_quality: "MAPQ>=20 retained"
+      workflow:        { engine: "nextflow", version: "24.04.0", run_id: "<uuid>", commit_sha: "<git sha>", provenance: "<path to this sample's W3C PROV record (same shape as ../../provenance/)>" }
+    sequence_data:
+      fastq: [ { file: "B2-0001_R1.fastq.gz", checksum: "sha256:<digest>" }, { file: "B2-0001_R2.fastq.gz", checksum: "sha256:<digest>" } ]
+      cram:  { file: "B2-0001.cram", checksum: "sha256:<digest>", reference_seqcol: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3" }
+      reference_fasta: { file: "<GRCh38.fa>", checksum: "md5:<fasta-md5>" }
+      feature_annotation: { file: "<annotation.gff3.gz>", format: "GFF3", checksum: "sha256:<digest>" }
+    variant_callset:
+      file: "B2-0001.g.vcf.gz"
+      vcf_version: "4.3"
+      checksum: "sha256:<digest>"
+      normalization: "fully-justified (GA4GH VRS)"
+      variant_count: 5820000
+      snv_count: 5000000                            # AFR-majority genome carries the most SNVs (ancestry)
+      indel_count: 820000                           # DRAGEN caller effect + AFR-majority ancestry raises indel counts too (~+15%, like SNVs)
+      inferred_sex_karyotype: "XY"
+      reference_stamps: { gnomad: "v4.1", clinvar: "2026-01-06", dbnsfp: "4.7a" }
+    genetic_ancestry:
+      method: "PCA projection onto 1000 Genomes reference"
+      superpop_fractions: { AFR: 0.86, AMR: 0.05, EAS: 0.02, EUR: 0.05, SAS: 0.02 }   # arbitrary, unrelated to site
+      top_pcs: [ -0.038, 0.011, 0.006 ]
+    qc:
+      mean_coverage_x: 30.8
+      callable_fraction_ge10x_nonN: 0.958
+      contamination_freemix: 0.004
+      human_read_fraction: 0.990
+      duplicate_rate: 0.086
+      ti_tv: 2.01
+      sex_concordance: "concordant"
+    phenotype:
+      phenopacket: "<path to GA4GH Phenopacket v2 for this subject>"
+      phenotypes_ref: "NCIT:C16977"
+      diseases:
+        - term: { label: "autism spectrum disorder", id: "MONDO:0005258" }
+      reported_sex: { label: "Male", id: "NCIT:C20197" }
+      measure_count: 27
+    provenance:
+      generated_by: { orcid: "https://orcid.org/0000-0000-0000-0000", role: "pipeline operator" }
+      generated_at: "2026-01-16T09:03:44Z"
+      reference_manifest_digest: "sha256:<lock-digest>"
+      pipeline_commit_sha: "<git sha>"
+      prov_record: "<path to this sample's W3C PROV record (same shape as ../../provenance/)>"
+    analysis_covariates:
+      { site: "B2", specimen_type: "blood", sbs_chemistry_channels: 2, aligner: "dragmap",
+        variant_caller: "dragen", mean_coverage_x: 30.8, contamination_freemix: 0.004,
+        human_read_fraction: 0.990, ancestry_pc: [ -0.038, 0.011, 0.006 ] }
+
+  # -- B2-0002: B2, BLOOD, 4-CHANNEL (HiSeq X Ten), DRAGMAP/DRAGEN ------------
+  #    (4-channel on BLOOD -> chemistry effect is separable from specimen)
+  - package_id: "GIST-WGS-EX:B2-0002"
+    schema_version: "0.1.0"
+    study: { bioproject: "<BioProject accession>", assay: "whole genome sequencing", assay_id: "OBI:0002117" }
+    subject:
+      subject_id: "B2-0002"
+      key_clinical_diagnosis: { label: "autism spectrum disorder", id: "MONDO:0005258" }
+      sex_assigned_at_birth: "female"
+      pathological_state: "affected"
+    sample:
+      sample_id: "B2-0002"
+      biosample: "<BioSample accession>"
+      specimen_type: { label: "blood", id: "UBERON:0000178" }
+      biospecimen_type: "whole blood"
+      analyte: { label: "genomic DNA", id: "EFO:0008479" }
+      collection_method: { label: "blood specimen collection", id: "OBI:1110095" }
+      sampling_protocol: "<protocol id / URI>"
+      collection_site: "B2"
+    sequencing:
+      platform: "Illumina"
+      instrument_model: "HiSeq X Ten"               # B2's 4-channel arm (SRA CV; patterned, 2x150-native; legacy data reprocessed)
+      sbs_chemistry_channels: 4
+      library_source: "GENOMIC"
+      library_strategy: "WGS"
+      library_selection: "RANDOM"
+      library_construction: "PCR-free"
+      library_preparation: "<library kit>"
+      unique_molecular_identifiers: false
+      sequencing_method: "WGS"
+      library_layout: "PAIRED"
+      read_length_bp: 150
+      target_mean_coverage_x: 30
+      sequencing_date: "2021-09-15"                 # legacy 4-channel arm (predates the 2-channel arms)
+    reference_assembly: *ref
+    processing:
+      alignment:       { tool: "dragmap", tool_id: null, version: "1.3.0", container: "sha256:<digest>", parameters: "--preserve-map-align-order true" }   # no bio.tools entry for DRAGMAP (checked)
+      variant_calling: { tool: "dragen", tool_id: null, version: "4.2.4", container: "sha256:<digest>", parameters: "--vc-emit-ref-confidence GVCF" }        # no bio.tools entry for DRAGEN (checked)
+      read_mapping_quality: "MAPQ>=20 retained"
+      workflow:        { engine: "nextflow", version: "24.04.0", run_id: "<uuid>", commit_sha: "<git sha>", provenance: "<path to this sample's W3C PROV record (same shape as ../../provenance/)>" }
+    sequence_data:
+      fastq: [ { file: "B2-0002_R1.fastq.gz", checksum: "sha256:<digest>" }, { file: "B2-0002_R2.fastq.gz", checksum: "sha256:<digest>" } ]
+      cram:  { file: "B2-0002.cram", checksum: "sha256:<digest>", reference_seqcol: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3" }
+      reference_fasta: { file: "<GRCh38.fa>", checksum: "md5:<fasta-md5>" }
+      feature_annotation: { file: "<annotation.gff3.gz>", format: "GFF3", checksum: "sha256:<digest>" }
+    variant_callset:
+      file: "B2-0002.g.vcf.gz"
+      vcf_version: "4.3"
+      checksum: "sha256:<digest>"
+      normalization: "fully-justified (GA4GH VRS)"
+      variant_count: 4940000
+      snv_count: 4150000                            # EAS-majority genome (see ancestry below)
+      indel_count: 790000                           # DRAGEN caller effect PLUS a further 4-channel chemistry increment (both covariates recorded)
+      inferred_sex_karyotype: "XX"
+      reference_stamps: { gnomad: "v4.1", clinvar: "2026-01-06", dbnsfp: "4.7a" }
+    genetic_ancestry:
+      method: "PCA projection onto 1000 Genomes reference"
+      superpop_fractions: { AFR: 0.03, AMR: 0.04, EAS: 0.85, EUR: 0.06, SAS: 0.02 }   # arbitrary, unrelated to chemistry
+      top_pcs: [ 0.041, -0.020, 0.008 ]
+    qc:
+      mean_coverage_x: 30.5
+      callable_fraction_ge10x_nonN: 0.944
+      contamination_freemix: 0.005
+      human_read_fraction: 0.989                     # blood -> high (independent of the caller/chemistry effects above)
+      duplicate_rate: 0.079                          # HiSeq X patterned flow cell
+      ti_tv: 2.00
+      sex_concordance: "concordant"
+    phenotype:
+      phenopacket: "<path to GA4GH Phenopacket v2 for this subject>"
+      phenotypes_ref: "NCIT:C16977"
+      diseases:
+        - term: { label: "autism spectrum disorder", id: "MONDO:0005258" }
+      reported_sex: { label: "Female", id: "NCIT:C16576" }
+      measure_count: 27
+    provenance:
+      generated_by: { orcid: "https://orcid.org/0000-0000-0000-0000", role: "pipeline operator" }
+      generated_at: "2026-01-16T10:41:02Z"
+      reference_manifest_digest: "sha256:<lock-digest>"
+      pipeline_commit_sha: "<git sha>"
+      prov_record: "<path to this sample's W3C PROV record (same shape as ../../provenance/)>"
+    analysis_covariates:
+      { site: "B2", specimen_type: "blood", sbs_chemistry_channels: 4, aligner: "dragmap",
+        variant_caller: "dragen", mean_coverage_x: 30.5, contamination_freemix: 0.005,
+        human_read_fraction: 0.989, ancestry_pc: [ 0.041, -0.020, 0.008 ] }
+
+  # -- B2-0003: B2, SALIVA, 2-channel (NovaSeq 6000), DRAGMAP/DRAGEN ----------
+  - package_id: "GIST-WGS-EX:B2-0003"
+    schema_version: "0.1.0"
+    study: { bioproject: "<BioProject accession>", assay: "whole genome sequencing", assay_id: "OBI:0002117" }
+    subject:
+      subject_id: "B2-0003"
+      key_clinical_diagnosis: { label: "autism spectrum disorder", id: "MONDO:0005258" }
+      sex_assigned_at_birth: "male"
+      pathological_state: "affected"
+    sample:
+      sample_id: "B2-0003"
+      biosample: "<BioSample accession>"
+      specimen_type: { label: "saliva", id: "UBERON:0001836" }
+      biospecimen_type: "saliva"
+      analyte: { label: "genomic DNA", id: "EFO:0008479" }
+      collection_method: { label: "Saliva Collection", id: "NCIT:C200883" }
+      sampling_protocol: "<protocol id / URI>"
+      collection_site: "B2"
+    sequencing:
+      platform: "Illumina"
+      instrument_model: "Illumina NovaSeq 6000"
+      sbs_chemistry_channels: 2
+      library_source: "GENOMIC"
+      library_strategy: "WGS"
+      library_selection: "RANDOM"
+      library_construction: "PCR-free"
+      library_preparation: "<library kit>"
+      unique_molecular_identifiers: false
+      sequencing_method: "WGS"
+      library_layout: "PAIRED"
+      read_length_bp: 150
+      target_mean_coverage_x: 30
+      sequencing_date: "2023-07-01"
+    reference_assembly: *ref
+    processing:
+      alignment:       { tool: "dragmap", tool_id: null, version: "1.3.0", container: "sha256:<digest>", parameters: "--preserve-map-align-order true" }   # no bio.tools entry for DRAGMAP (checked)
+      variant_calling: { tool: "dragen", tool_id: null, version: "4.2.4", container: "sha256:<digest>", parameters: "--vc-emit-ref-confidence GVCF" }        # no bio.tools entry for DRAGEN (checked)
+      read_mapping_quality: "MAPQ>=20 retained"
+      workflow:        { engine: "nextflow", version: "24.04.0", run_id: "<uuid>", commit_sha: "<git sha>", provenance: "<path to this sample's W3C PROV record (same shape as ../../provenance/)>" }
+    sequence_data:
+      fastq: [ { file: "B2-0003_R1.fastq.gz", checksum: "sha256:<digest>" }, { file: "B2-0003_R2.fastq.gz", checksum: "sha256:<digest>" } ]
+      cram:  { file: "B2-0003.cram", checksum: "sha256:<digest>", reference_seqcol: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3" }
+      reference_fasta: { file: "<GRCh38.fa>", checksum: "md5:<fasta-md5>" }
+      feature_annotation: { file: "<annotation.gff3.gz>", format: "GFF3", checksum: "sha256:<digest>" }
+    variant_callset:
+      file: "B2-0003.g.vcf.gz"
+      vcf_version: "4.3"
+      checksum: "sha256:<digest>"
+      normalization: "fully-justified (GA4GH VRS)"
+      variant_count: 5162000
+      snv_count: 4450000                            # AMR-majority (admixed) genome
+      indel_count: 712000                           # DRAGEN arm runs higher indel counts than the GATK arm (caller effect)
+      inferred_sex_karyotype: "XY"
+      reference_stamps: { gnomad: "v4.1", clinvar: "2026-01-06", dbnsfp: "4.7a" }
+    genetic_ancestry:
+      method: "PCA projection onto 1000 Genomes reference"
+      superpop_fractions: { AFR: 0.05, AMR: 0.80, EAS: 0.03, EUR: 0.10, SAS: 0.02 }   # arbitrary
+      top_pcs: [ 0.012, -0.031, 0.017 ]
+    qc:
+      mean_coverage_x: 29.9
+      callable_fraction_ge10x_nonN: 0.947
+      contamination_freemix: 0.006
+      human_read_fraction: 0.710                     # saliva -> low, like B1-0002 (specimen signal, both centers)
+      duplicate_rate: 0.128
+      ti_tv: 2.00
+      sex_concordance: "concordant"
+    phenotype:
+      phenopacket: "<path to GA4GH Phenopacket v2 for this subject>"
+      phenotypes_ref: "NCIT:C16977"
+      diseases:
+        - term: { label: "autism spectrum disorder", id: "MONDO:0005258" }
+      reported_sex: { label: "Male", id: "NCIT:C20197" }
+      measure_count: 27
+    provenance:
+      generated_by: { orcid: "https://orcid.org/0000-0000-0000-0000", role: "pipeline operator" }
+      generated_at: "2026-01-16T12:22:19Z"
+      reference_manifest_digest: "sha256:<lock-digest>"
+      pipeline_commit_sha: "<git sha>"
+      prov_record: "<path to this sample's W3C PROV record (same shape as ../../provenance/)>"
+    analysis_covariates:
+      { site: "B2", specimen_type: "saliva", sbs_chemistry_channels: 2, aligner: "dragmap",
+        variant_caller: "dragen", mean_coverage_x: 29.9, contamination_freemix: 0.006,
+        human_read_fraction: 0.710, ancestry_pc: [ 0.012, -0.031, 0.017 ] }
+
+# -----------------------------------------------------------------------------
+# Reading the design: specimen (blood/saliva) appears in BOTH centers; B2 carries
+# both 2- and 4-channel with 4-channel on BLOOD (chemistry separable from specimen);
+# pipeline is center-specific (as in the paper). The counts track the right causes:
+# the DRAGEN arms (all of B2) run higher indel counts than the GATK arms (caller
+# effect), and B2-0002 adds a further 4-channel chemistry increment - both recorded;
+# SNV and indel counts track genetic ancestry (the AFR-majority arm, B2-0001, carries the
+# most, ~+20% SNVs / ~+15% indels vs EUR). human_read_fraction drops for saliva (specimen). FREEMIX stays low
+# throughout (human-human, unaffected by microbial DNA). cohort_context records the
+# differing saliva/chemistry proportions that let a metadata-aware model separate
+# these from biological signal.
+# -----------------------------------------------------------------------------

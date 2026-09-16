@@ -1,0 +1,221 @@
+{
+  "_disclaimer": "ILLUSTRATIVE / SYNTHETIC. Example metadata for the Bridge2AI GIST implementation resources (arXiv:2512.11519). No values derive from human subjects. All subject identifiers, values, checksums, container digests, dates, and accessions are placeholders. The only non-synthetic identifiers, marked inline, are the GA4GH Refget seqcol digest and the ontology and tool-registry (bio.tools) CURIEs. Ancestry values are arbitrary.",
+  "prefixes": {
+    "UBERON": "http://purl.obolibrary.org/obo/UBERON_",
+    "OBI": "http://purl.obolibrary.org/obo/OBI_",
+    "NCIT": "http://purl.obolibrary.org/obo/NCIT_",
+    "MONDO": "http://purl.obolibrary.org/obo/MONDO_",
+    "EFO": "http://www.ebi.ac.uk/efo/EFO_",
+    "GSSO": "http://purl.obolibrary.org/obo/GSSO_",
+    "LOINC": "https://loinc.org/",
+    "ORCID": "https://orcid.org/"
+  },
+  "metadata_package": {
+    "package_id": "GIST-WES-EX:0001",
+    "schema_version": "0.1.0",
+    "study": {
+      "bioproject": "<BioProject accession>",
+      "assay": "whole exome sequencing",
+      "assay_id": "OBI:0002118"
+    },
+    "subject": {
+      "subject_id": "WES-0001",
+      "key_clinical_diagnosis": {
+        "label": "autism spectrum disorder",
+        "id": "MONDO:0005258"
+      },
+      "sex_assigned_at_birth": "male",
+      "pathological_state": "affected"
+    },
+    "sample": {
+      "sample_id": "WES-0001",
+      "biosample": "<BioSample accession>",
+      "specimen_type": {
+        "label": "blood",
+        "id": "UBERON:0000178"
+      },
+      "biospecimen_type": "whole blood",
+      "analyte": {
+        "label": "genomic DNA",
+        "id": "EFO:0008479"
+      },
+      "collection_method": {
+        "label": "blood specimen collection",
+        "id": "OBI:1110095"
+      },
+      "sampling_protocol": "<protocol id / URI>",
+      "collection_site": "B1"
+    },
+    "sequencing": {
+      "platform": "Illumina",
+      "instrument_model": "Illumina NovaSeq 6000",
+      "sbs_chemistry_channels": 2,
+      "library_source": "GENOMIC",
+      "library_strategy": "WXS",
+      "library_selection": "Hybrid Selection",
+      "library_construction": "hybridization capture",
+      "library_preparation": "<exome library + capture kit>",
+      "unique_molecular_identifiers": false,
+      "sequencing_method": "WXS",
+      "library_layout": "PAIRED",
+      "read_length_bp": 150,
+      "target_mean_coverage_x": 100,
+      "sequencing_date": "2023-05-20"
+    },
+    "capture": {
+      "kit": "<vendor exome capture kit + version>",
+      "target_regions_bed": "<path to exome target-regions BED (GRCh38)>",
+      "target_regions_checksum": "sha256:<digest>",
+      "target_size_mb": 36.5
+    },
+    "reference_assembly": {
+      "label": "GRCh38 primary assembly, UCSC naming, 25 sequences in seqcol order: chr1-chr22, chrM, chrX, chrY",
+      "seqcol_digest": "Ba88PY52_qeifhJrgUXyin6UITdXNsg3",
+      "source_uri": "<URI of the exact reference FASTA used>",
+      "source_checksum": "md5:<fasta-md5>"
+    },
+    "processing": {
+      "alignment": {
+        "tool": "bwa-mem",
+        "tool_id": "biotools:bwa",
+        "version": "0.7.17",
+        "container": "sha256:<digest>",
+        "parameters": "-M -K 100000000"
+      },
+      "variant_calling": {
+        "tool": "gatk-haplotypecaller",
+        "tool_id": "biotools:gatk",
+        "version": "4.4.0.0",
+        "container": "sha256:<digest>",
+        "parameters": "-L <exome.bed> --ploidy 2 -ERC GVCF"
+      },
+      "read_mapping_quality": "MAPQ>=20 retained",
+      "workflow": {
+        "engine": "nextflow",
+        "version": "24.04.0",
+        "run_id": "<uuid>",
+        "commit_sha": "<git sha>",
+        "provenance": "<path to this sample's W3C PROV record (same shape as ../../provenance/)>"
+      }
+    },
+    "sequence_data": {
+      "fastq": [
+        {
+          "file": "WES-0001_R1.fastq.gz",
+          "checksum": "sha256:<digest>"
+        },
+        {
+          "file": "WES-0001_R2.fastq.gz",
+          "checksum": "sha256:<digest>"
+        }
+      ],
+      "cram": {
+        "file": "WES-0001.cram",
+        "checksum": "sha256:<digest>",
+        "reference_seqcol": "Ba88PY52_qeifhJrgUXyin6UITdXNsg3"
+      },
+      "reference_fasta": {
+        "file": "<GRCh38.fa>",
+        "checksum": "md5:<fasta-md5>"
+      },
+      "feature_annotation": {
+        "file": "<annotation.gff3.gz>",
+        "format": "GFF3",
+        "checksum": "sha256:<digest>"
+      }
+    },
+    "variant_callset": {
+      "file": "WES-0001.g.vcf.gz",
+      "vcf_version": "4.3",
+      "checksum": "sha256:<digest>",
+      "normalization": "fully-justified (GA4GH VRS)",
+      "variant_count": 44000,
+      "snv_count": 39600,
+      "indel_count": 4400,
+      "inferred_sex_karyotype": "XY",
+      "variant_representation": [
+        {
+          "vrs_id": "<ga4gh:VA.* - compute with vrs-python against the seqcol-pinned reference>",
+          "hgvs_g": "<GRCh38 g. HGVS expression>",
+          "variant_quality": 640.1,
+          "total_depth": 96,
+          "ref_supporting_reads": 50,
+          "alt_supporting_reads": 46
+        }
+      ],
+      "reference_stamps": {
+        "gnomad": "v4.1",
+        "clinvar": "2026-01-06",
+        "dbnsfp": "4.7a"
+      }
+    },
+    "genetic_ancestry": {
+      "method": "PCA projection onto 1000 Genomes reference",
+      "superpop_fractions": {
+        "AFR": 0.03,
+        "AMR": 0.04,
+        "EAS": 0.02,
+        "EUR": 0.89,
+        "SAS": 0.02
+      },
+      "top_pcs": [
+        -0.009,
+        0.006,
+        0.018
+      ]
+    },
+    "qc": {
+      "mean_target_coverage_x": 104.2,
+      "pct_target_bases_20x": 0.981,
+      "on_target_rate": 0.712,
+      "contamination_freemix": 0.005,
+      "human_read_fraction": 0.991,
+      "duplicate_rate": 0.093,
+      "ti_tv": 3.02,
+      "sex_concordance": "concordant"
+    },
+    "phenotype": {
+      "phenopacket": "<path to GA4GH Phenopacket v2 for this subject>",
+      "phenotypes_ref": "NCIT:C16977",
+      "diseases": [
+        {
+          "term": {
+            "label": "autism spectrum disorder",
+            "id": "MONDO:0005258"
+          }
+        }
+      ],
+      "reported_sex": {
+        "label": "Male",
+        "id": "NCIT:C20197"
+      },
+      "measure_count": 27
+    },
+    "provenance": {
+      "generated_by": {
+        "orcid": "https://orcid.org/0000-0000-0000-0000",
+        "role": "pipeline operator"
+      },
+      "generated_at": "2026-01-15T04:22:10Z",
+      "reference_manifest_digest": "sha256:<lock-digest>",
+      "pipeline_commit_sha": "<git sha>",
+      "prov_record": "<path to this sample's W3C PROV record (same shape as ../../provenance/)>"
+    },
+    "analysis_covariates": {
+      "site": "B1",
+      "specimen_type": "blood",
+      "sbs_chemistry_channels": 2,
+      "capture_kit": "<exome capture kit + version>",
+      "on_target_rate": 0.712,
+      "aligner": "bwa-mem",
+      "variant_caller": "gatk-haplotypecaller",
+      "mean_target_coverage_x": 104.2,
+      "contamination_freemix": 0.005,
+      "ancestry_pc": [
+        -0.009,
+        0.006,
+        0.018
+      ]
+    }
+  }
+}

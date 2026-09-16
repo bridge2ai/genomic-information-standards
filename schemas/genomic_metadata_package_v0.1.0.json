@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/bridge2ai/genomic-information-standards/blob/main/schemas/genomic_metadata_package_v0.1.0.json",
+  "title": "GIST AI-ready genomic metadata package (v0.1.0)",
+  "description": "Draft schema for the example metadata packages under examples/. A file carries either a single `metadata_package` (WES, panel) or a list of `metadata_packages` (WGS). Only core, stable fields are constrained; packages may carry additional fields. The template is intentionally NOT valid against this schema (its <placeholder> values are strings where integers are required).",
+  "type": "object",
+  "anyOf": [
+    { "required": ["metadata_package"] },
+    { "required": ["metadata_packages"] }
+  ],
+  "properties": {
+    "metadata_package": { "$ref": "#/$defs/package" },
+    "metadata_packages": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/package" }
+    }
+  },
+  "$defs": {
+    "curie": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._]+:[A-Za-z0-9._-]+$"
+    },
+    "ontology_term": {
+      "type": "object",
+      "required": ["label", "id"],
+      "properties": {
+        "label": { "type": "string" },
+        "id": { "$ref": "#/$defs/curie" }
+      }
+    },
+    "package": {
+      "type": "object",
+      "required": [
+        "package_id", "schema_version", "study", "sample",
+        "sequencing", "reference_assembly", "variant_callset"
+      ],
+      "properties": {
+        "package_id": { "type": "string" },
+        "schema_version": { "type": "string" },
+        "study": {
+          "type": "object",
+          "required": ["assay", "assay_id"],
+          "properties": {
+            "assay": { "type": "string" },
+            "assay_id": { "$ref": "#/$defs/curie" }
+          }
+        },
+        "sample": {
+          "type": "object",
+          "required": ["sample_id", "specimen_type", "analyte"],
+          "properties": {
+            "specimen_type": { "$ref": "#/$defs/ontology_term" },
+            "analyte": { "$ref": "#/$defs/ontology_term" }
+          }
+        },
+        "reference_assembly": {
+          "type": "object",
+          "required": ["seqcol_digest"],
+          "properties": {
+            "seqcol_digest": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{32}$",
+              "description": "GA4GH Refget Sequence Collections top-level digest (bare, no SQ. prefix)."
+            }
+          }
+        },
+        "variant_callset": {
+          "type": "object",
+          "required": ["file", "variant_count", "snv_count", "indel_count"],
+          "properties": {
+            "file": { "type": "string" },
+            "vcf_version": { "type": "string" },
+            "variant_count": { "type": "integer", "minimum": 0 },
+            "snv_count": { "type": "integer", "minimum": 0 },
+            "indel_count": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    }
+  }
+}
