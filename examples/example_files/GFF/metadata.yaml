@@ -1,0 +1,114 @@
+prefixes:
+  NCBITaxon: "https://identifiers.org/taxonomy:"
+  INSDC: "https://identifiers.org/insdc:"
+  ENSEMBL: "https://identifiers.org/ensembl:"
+  HGNC: "https://bioregistry.io/hgnc:"
+  biotools: "https://bio.tools/"
+
+metadata_package:
+  package_id: "GIST-GFF3-EX:0001"
+  schema_version: "0.1.0"
+  title: "GENCODE Release 49 BRCA1 regional GFF3 example"
+  resource_type: "genome feature annotation"
+  format: "GFF3"
+  format_version: "3"
+  description: >-
+    Regional GFF3 annotation containing features overlapping the BRCA1 locus,
+    derived from the GENCODE Human Release 49 comprehensive primary-assembly annotation.
+
+  organism:
+    label: "Homo sapiens"
+    id: "NCBITaxon:9606"
+
+  reference_assembly:
+    label: "GRCh38 primary assembly"
+    assembly_accession: "INSDC:GCA_000001405.29"
+    gencode_release: 49
+    gencode_release_uri: "https://www.gencodegenes.org/human/release_49.html"
+    sequence_naming: "UCSC-style chr names"
+    compatibility_note: "Sequence-region names match the corresponding GENCODE primary-assembly FASTA."
+
+  annotation_target:
+    label: "BRCA1 locus"
+    gene_symbol: "BRCA1"
+    ensembl_gene: "ENSEMBL:ENSG00000012048"
+    hgnc: "HGNC:1100"
+    interval: "chr17:43040000-43175000"
+    coordinate_convention: "1-based, end-inclusive GFF3 coordinates"
+
+  derivation:
+    source_file: "gencode.v49.primary_assembly.annotation.gff3.gz"
+    source_uri: "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_49/gencode.v49.primary_assembly.annotation.gff3.gz"
+    source_committed: false
+    source_not_committed_reason: "The complete upstream annotation exceeds GitHub file-size limits."
+    selection_rule: "Retain records on chr17 whose feature spans overlap chr17:43040000-43175000."
+    sorting: "sequence identifier, ascending start coordinate, descending end coordinate"
+    sorting_reason: "Required for Tabix indexing because the upstream hierarchical GFF3 is not strictly coordinate sorted."
+    content_modification: "Feature fields and attributes were not otherwise modified."
+
+  files:
+    annotation:
+      file: "GENCODE.v49.GRCh38.BRCA1.gff3"
+      format: "GFF3"
+      role: "human-readable regional example"
+      checksum: { algorithm: "SHA-256", manifest: "validation/sha256sums.txt" }
+    compressed_annotation:
+      file: "GENCODE.v49.GRCh38.BRCA1.gff3.gz"
+      format: "BGZF-compressed GFF3"
+      role: "indexed regional example"
+      checksum: { algorithm: "SHA-256", manifest: "validation/sha256sums.txt" }
+    index:
+      file: "GENCODE.v49.GRCh38.BRCA1.gff3.gz.tbi"
+      format: "Tabix index"
+      indexes: "GENCODE.v49.GRCh38.BRCA1.gff3.gz"
+      checksum: { algorithm: "SHA-256", manifest: "validation/sha256sums.txt" }
+
+  annotation_model:
+    columns:
+      - "seqid"
+      - "source"
+      - "type"
+      - "start"
+      - "end"
+      - "score"
+      - "strand"
+      - "phase"
+      - "attributes"
+    stable_identifiers: "validation/attribute-summary.tsv"
+    feature_types: "validation/feature-counts.tsv"
+    parent_child_representation: "ID and Parent attributes"
+    gene_record: "validation/BRCA1-gene-record.tsv"
+
+  validation:
+    files_present: "validation/file-presence.txt"
+    compression: "validation/compression-check.txt"
+    nine_column_structure: "validation/column-validation.txt"
+    coordinates_and_strands: "validation/coordinate-validation.txt"
+    coordinate_sorting: "validation/sort-validation.txt"
+    indexed_contigs: "validation/indexed-contigs.txt"
+    indexed_record_count: "validation/indexed-record-count.tsv"
+    indexed_retrieval: "validation/index-validation.txt"
+    feature_counts: "validation/feature-counts.tsv"
+    attribute_summary: "validation/attribute-summary.tsv"
+    checksum_manifest: "validation/sha256sums.txt"
+    software_manifest: "validation/software-versions.txt"
+
+  provenance:
+    upstream_organization: "GENCODE / EMBL-EBI"
+    retrieved_at: "2026-09-03"
+    documentation: "README.md"
+
+  gist_alignment:
+    - "Reference assembly, annotation release, source URI, and coordinate convention are recorded."
+    - "BRCA1 is represented with stable Ensembl and HGNC identifiers."
+    - "Structured feature types and ID/Parent relationships preserve annotation hierarchy."
+    - "Matching GENCODE sequence naming supports compatibility with the FASTA example."
+    - "The GFF3 is provided in readable and indexed forms with checksums and validation evidence."
+    - "Regional extraction and coordinate sorting are documented as provenance-bearing transformations."
+
+  limitations:
+    - "This regional annotation is not a complete catalog of GENCODE genes or transcripts."
+    - "Overlapping features retain original coordinates and may extend beyond the extraction interval."
+    - "The example does not assert the clinical relevance of individual transcripts."
+    - "No subject, specimen, assay, consent, or phenotype metadata apply to a reference annotation resource."
+
