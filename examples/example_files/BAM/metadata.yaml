@@ -1,0 +1,119 @@
+prefixes:
+  NCBITaxon: "https://identifiers.org/taxonomy:"
+  BioSample: "https://identifiers.org/biosample:"
+  biotools: "https://bio.tools/"
+
+metadata_package:
+  package_id: "GIST-BAM-EX:0001"
+  schema_version: "0.1.0"
+  title: "HG002 Illumina GRCh38 regional BAM exemplar"
+  resource_type: "sequence alignment"
+  format: "BAM"
+  description: >-
+    Compact regional BAM derived from the NIST Genome in a Bottle HG002
+    Illumina 2 x 250 bp whole-genome alignment against GRCh38.
+
+  subject:
+    subject_id: "HG002"
+    alternate_ids:
+      - "NA24385"
+    organism: { label: "Homo sapiens", id: "NCBITaxon:9606" }
+    subject_role: "Genome in a Bottle reference material"
+    phenotype: null
+    phenotype_note: "No phenotype or clinical interpretation is asserted by this example."
+
+  study:
+    project: "NIST Genome in a Bottle"
+    assay: "whole-genome sequencing"
+    upstream_collection: "AshkenazimTrio/HG002_NA24385_son"
+
+  sequencing:
+    platform: "Illumina"
+    library_layout: "PAIRED"
+    read_length_bp: 250
+    read_configuration: "2 x 250 bp"
+    embedded_metadata:
+      read_groups: "Inspect @RG records in the BAM header"
+      sample_identifier: "Inspect SM tags in @RG records"
+
+  reference_assembly:
+    label: "GRCh38"
+    sequence_naming: "UCSC-style chr names"
+    embedded_metadata: "@SQ records contain reference names and lengths"
+    exact_reference_uri: null
+    exact_reference_note: >-
+      The exact reference artifact should be identified through the upstream
+      record and any sequence checksums present in the BAM header.
+
+  processing:
+    alignment:
+      tool: "Novoalign"
+      tool_id: "biotools:novoalign"
+      version: null
+      parameters: null
+      evidence: "Upstream novoalign_bams collection path; inspect @PG records for embedded details"
+    regional_extraction:
+      tool: "samtools"
+      tool_id: "biotools:samtools"
+      version_reference: "validation/samtools-version.txt"
+      source_file: "HG002.GRCh38.2x250.bam"
+      interval: "chr20:10000000-10100000"
+      coordinate_convention: "1-based, end-inclusive samtools region syntax"
+      transformation: "Complete alignment records overlapping the interval were retained without clipping."
+
+  files:
+    alignment:
+      file: "HG002.GRCh38.2x250.chr20_10000000-10100000.bam"
+      format: "BAM"
+      role: "regional exemplar"
+      checksum: { algorithm: "SHA-256", manifest: "validation/sha256sums.txt" }
+    index:
+      file: "HG002.GRCh38.2x250.chr20_10000000-10100000.bam.bai"
+      format: "BAI"
+      indexes: "HG002.GRCh38.2x250.chr20_10000000-10100000.bam"
+      checksum: { algorithm: "SHA-256", manifest: "validation/sha256sums.txt" }
+    upstream_alignment:
+      file: "HG002.GRCh38.2x250.bam"
+      committed: false
+      reason_not_committed: "Exceeds GitHub file-size limits"
+      source_uri: "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/AshkenazimTrio/HG002_NA24385_son/NIST_Illumina_2x250bps/novoalign_bams/HG002.GRCh38.2x250.bam"
+      index_uri: "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/AshkenazimTrio/HG002_NA24385_son/NIST_Illumina_2x250bps/novoalign_bams/HG002.GRCh38.2x250.bam.bai"
+
+  validation:
+    structural_check: { tool: "samtools quickcheck", result: "passed; no errors reported" }
+    flag_statistics: "validation/regional-flagstat.txt"
+    index_statistics: "validation/regional-idxstats.tsv"
+    coverage_statistics: "validation/regional-coverage.tsv"
+    interval_coverage_statistics: "validation/selected-interval-coverage.tsv"
+    observed_summary:
+      chr20_mapped_records_idxstats: 28595
+      chr20_unmapped_records_idxstats: 206
+      chr20_covered_bases: 100492
+      chr20_coverage_percent: 0.155937
+      chr20_mean_depth: 0.109747
+      mean_base_quality: 37.1
+      mean_mapping_quality: 70
+    interpretation_note: >-
+      The coverage values above were calculated across the complete chr20
+      reference length for a regional subset and are not genome-wide sequencing metrics.
+
+  provenance:
+    upstream_organization: "NIST Genome in a Bottle / NCBI"
+    retrieved_at: "2026-09-01"
+    checksum_manifest: "validation/sha256sums.txt"
+    software_manifest: "validation/samtools-version.txt"
+    documentation: "README.md"
+
+  gist_alignment:
+    - "Stable subject identifiers are recorded."
+    - "Sequencing platform, layout, and read length are documented."
+    - "Reference assembly and embedded @SQ metadata are identified."
+    - "Alignment provenance and regional derivation are documented."
+    - "The BAM is paired with its machine-readable BAI index."
+    - "Integrity and quality-control outputs are linked."
+
+  limitations:
+    - "This regional BAM must not be used to estimate genome-wide sequencing quality."
+    - "The exact Novoalign version and parameters are not asserted unless present in the upstream @PG records."
+    - "The complete upstream BAM is externally hosted and is not committed to the repository."
+
