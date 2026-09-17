@@ -1,0 +1,88 @@
+prefixes:
+  NCBITaxon: "https://identifiers.org/taxonomy:"
+  INSDC: "https://identifiers.org/insdc:"
+  biotools: "https://bio.tools/"
+
+metadata_package:
+  package_id: "GIST-FASTA-EX:0001"
+  schema_version: "0.1.0"
+  title: "GENCODE GRCh38 regional reference FASTA exemplar"
+  resource_type: "reference sequence"
+  format: "FASTA"
+  description: >-
+    Regional reference sequence extracted from the GRCh38 primary-assembly
+    genome FASTA distributed with GENCODE Human Release 49.
+
+  organism:
+    label: "Homo sapiens"
+    id: "NCBITaxon:9606"
+
+  reference_assembly:
+    label: "GRCh38 primary assembly"
+    assembly_accession: "INSDC:GCA_000001405.29"
+    gencode_release: 49
+    gencode_release_uri: "https://www.gencodegenes.org/human/release_49.html"
+    sequence_naming: "UCSC-style chr names"
+    source_file: "GRCh38.primary_assembly.genome.fa.gz"
+    source_uri: "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_49/GRCh38.primary_assembly.genome.fa.gz"
+    source_committed: false
+    source_not_committed_reason: "The complete reference genome exceeds GitHub file-size limits."
+
+  derivation:
+    tool: "samtools faidx"
+    tool_id: "biotools:samtools"
+    version_reference: "validation/samtools-version.txt"
+    source_sequence: "chr20"
+    interval: "chr20:10000000-10100000"
+    coordinate_convention: "1-based, end-inclusive samtools region syntax"
+    expected_length_bp: 100001
+    transformation: "The requested interval was extracted without nucleotide modification."
+
+  files:
+    sequence:
+      file: "GRCh38.chr20_10000000-10100000.fa"
+      format: "FASTA"
+      role: "regional reference example"
+      sequence_identifier: "chr20:10000000-10100000"
+      checksum: { algorithm: "SHA-256", manifest: "validation/sha256sums.txt" }
+    index:
+      file: "GRCh38.chr20_10000000-10100000.fa.fai"
+      format: "FAI"
+      indexes: "GRCh38.chr20_10000000-10100000.fa"
+      checksum: { algorithm: "SHA-256", manifest: "validation/sha256sums.txt" }
+    sequence_dictionary:
+      file: "GRCh38.chr20_10000000-10100000.dict"
+      format: "SAM sequence dictionary"
+      describes: "GRCh38.chr20_10000000-10100000.fa"
+      checksum: { algorithm: "SHA-256", manifest: "validation/sha256sums.txt" }
+
+  validation:
+    observed_sequence_length_bp: 100001
+    expected_sequence_length_bp: 100001
+    length_check: "passed"
+    indexed_retrieval: "passed"
+    sequence_composition: "validation/sequence-summary.tsv"
+    checksum_manifest: "validation/sha256sums.txt"
+    software_manifest: "validation/samtools-version.txt"
+    composition_scope_note: "GC and ambiguous-base values describe only the extracted interval."
+
+  provenance:
+    upstream_organization: "GENCODE / EMBL-EBI"
+    retrieved_at: "2026-09-03"
+    source_uri: "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_49/GRCh38.primary_assembly.genome.fa.gz"
+    documentation: "README.md"
+
+  gist_alignment:
+    - "Reference assembly, distribution release, source URI, and retrieval date are recorded."
+    - "The FASTA is paired with its FAI index and sequence dictionary as a reference bundle."
+    - "The coordinate convention and regional derivation are explicit."
+    - "Checksums provide byte-level file identity; sequence digests can provide content-level identity."
+    - "Sequence length, composition, and indexed retrieval are validated."
+    - "The sequence naming convention is documented for cross-format compatibility."
+
+  limitations:
+    - "This regional FASTA is not a replacement for the complete GRCh38 assembly."
+    - "The regional sequence identifier is not a globally recognized chromosome identifier."
+    - "Coordinates in outputs generated against the regional FASTA may be relative to the extracted sequence."
+    - "No subject, specimen, assay, consent, or phenotype metadata apply to a reference sequence resource."
+

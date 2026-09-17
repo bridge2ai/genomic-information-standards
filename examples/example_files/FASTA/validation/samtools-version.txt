@@ -1,0 +1,28 @@
+samtools 1.24
+Using htslib 1.24
+Copyright (C) 2026 Genome Research Ltd.
+
+Samtools compilation details:
+    Features:       build=configure curses=yes 
+    CC:             clang -std=gnu23
+    CPPFLAGS:       
+    CFLAGS:         -Wall -g -O2
+    LDFLAGS:        
+    HTSDIR:         
+    LIBS:           
+    CURSES_LIB:     -lncurses
+
+HTSlib compilation details:
+    Features:       build=configure libcurl=yes S3=yes GCS=yes libdeflate=yes lzma=yes bzip2=yes plugins=no htscodecs=1.6.7
+    CC:             clang -std=gnu23
+    CPPFLAGS:       
+    CFLAGS:         -Wall -g -O2 -fvisibility=hidden
+    LDFLAGS:        -fvisibility=hidden 
+
+HTSlib URL scheme handlers present:
+    built-in:	 file, preload, data
+    Amazon S3:	 s3+https, s3, s3+http
+    Google Cloud Storage:	 gs+http, gs+https, gs
+    libcurl:	 gophers, smtp, ldaps, smb, rtsp, tftp, pop3, smbs, imaps, pop3s, ftps, https, http, ftp, gopher, imap, ldap, smtps, dict, mqtt, telnet
+    crypt4gh-needed:	 crypt4gh
+    mem:	 mem
