@@ -1,0 +1,1 @@
+PASS: BGZF-compressed regional GFF3 is readable

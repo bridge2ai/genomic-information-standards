@@ -1,0 +1,3 @@
+bgzip (htslib) 1.24
+tabix (htslib) 1.24
+awk version 20200816

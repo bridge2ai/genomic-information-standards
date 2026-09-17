@@ -1,0 +1,1 @@
+PASS: all annotation records contain nine columns

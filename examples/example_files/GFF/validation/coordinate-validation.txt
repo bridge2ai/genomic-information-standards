@@ -1,0 +1,1 @@
+PASS: coordinates and strand values are valid
