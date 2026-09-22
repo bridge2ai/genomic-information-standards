@@ -8,7 +8,7 @@
 # manuscript's Supplementary Table 1; the full MUST field set is in
 # ../../templates/genomic_metadata_package_template.yaml.
 #
-# Unlike the WGS/WES examples this package intentionally omits `genetic_ancestry`:
+# Unlike the GS/ES examples this package intentionally omits `genetic_ancestry`:
 # a sub-megabase target cannot support 1000 Genomes PCA projection (see the panel block).
 # =============================================================================
 

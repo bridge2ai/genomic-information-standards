@@ -8,8 +8,8 @@ both YAML and JSON.
 
 | Assay | Directory | Description |
 |-------|-----------|-------------|
-| Whole genome sequencing | [`whole_genome_sequencing/`](whole_genome_sequencing/) | Two-center autism-WGS composite (five packages + `cohort_context`) modelling the manuscript's use case. |
-| Whole exome sequencing | [`whole_exome_sequencing/`](whole_exome_sequencing/) | Same package shape plus a `capture` block and capture-specific QC. |
+| Genome sequencing | [`genome_sequencing/`](genome_sequencing/) | Two-center autism genome-sequencing composite (five packages + `cohort_context`) modelling the manuscript's use case. |
+| Exome sequencing | [`exome_sequencing/`](exome_sequencing/) | Same package shape plus a `capture` block and capture-specific QC. |
 | Targeted panel | [`targeted_panel/`](targeted_panel/) | Same package shape plus a `panel` block with HGNC-identified genes and a real GRCh38 target-regions BED. |
 
 A blank, adaptable form is in [`../templates/`](../templates/); a workflow-run
@@ -25,7 +25,7 @@ a CI check are in [`../schemas/`](../schemas/) and `.github/workflows/`.
 - Field-level ontology anchoring follows the manuscript's Supplementary Table 1.
   `GIST-*-EX` package ids are GIST-local and non-resolving; `ga4gh:` is the GA4GH
   VRS namespace (computed, content-derived identifiers with no central resolver).
-- The WGS file's root key is `metadata_packages` (a **list** of packages); the WES
+- The GS file's root key is `metadata_packages` (a **list** of packages); the ES
   and panel files use `metadata_package` (a single **mapping**) — a consumer must
   handle both.
 

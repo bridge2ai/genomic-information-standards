@@ -18,7 +18,7 @@
     "study": {
       "bioproject": "<BioProject accession | ->",
       "assay": "<whole genome sequencing | whole exome sequencing | targeted panel>",
-      "assay_id": "<OBI:0002117 WGS | OBI:0002118 WES | NCIT:C173599 panel>",
+      "assay_id": "<OBI:0002117 GS | OBI:0002118 ES | NCIT:C173599 panel>",
       "contact_email": "<data-contact email>"
     },
     "subject": {

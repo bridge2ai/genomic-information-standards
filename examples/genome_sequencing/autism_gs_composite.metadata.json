@@ -60,7 +60,7 @@
   },
   "metadata_packages": [
     {
-      "package_id": "GIST-WGS-EX:B1-0001",
+      "package_id": "GIST-GS-EX:B1-0001",
       "schema_version": "0.1.0",
       "study": {
         "bioproject": "<BioProject accession>",
@@ -139,7 +139,7 @@
           "version": "24.04.0",
           "run_id": "<uuid>",
           "commit_sha": "<git sha>",
-          "provenance": "../../provenance/wgs_align_call_run.provenance.yaml"
+          "provenance": "../../provenance/gs_align_call_run.provenance.yaml"
         }
       },
       "sequence_data": {
@@ -259,7 +259,7 @@
         "generated_at": "2026-01-15T04:22:10Z",
         "reference_manifest_digest": "sha256:<lock-digest>",
         "pipeline_commit_sha": "<git sha>",
-        "prov_record": "../../provenance/wgs_align_call_run.provenance.yaml"
+        "prov_record": "../../provenance/gs_align_call_run.provenance.yaml"
       },
       "analysis_covariates": {
         "site": "B1",
@@ -278,7 +278,7 @@
       }
     },
     {
-      "package_id": "GIST-WGS-EX:B1-0002",
+      "package_id": "GIST-GS-EX:B1-0002",
       "schema_version": "0.1.0",
       "study": {
         "bioproject": "<BioProject accession>",
@@ -469,7 +469,7 @@
       }
     },
     {
-      "package_id": "GIST-WGS-EX:B2-0001",
+      "package_id": "GIST-GS-EX:B2-0001",
       "schema_version": "0.1.0",
       "study": {
         "bioproject": "<BioProject accession>",
@@ -660,7 +660,7 @@
       }
     },
     {
-      "package_id": "GIST-WGS-EX:B2-0002",
+      "package_id": "GIST-GS-EX:B2-0002",
       "schema_version": "0.1.0",
       "study": {
         "bioproject": "<BioProject accession>",
@@ -851,7 +851,7 @@
       }
     },
     {
-      "package_id": "GIST-WGS-EX:B2-0003",
+      "package_id": "GIST-GS-EX:B2-0003",
       "schema_version": "0.1.0",
       "study": {
         "bioproject": "<BioProject accession>",

@@ -1,11 +1,11 @@
-# Whole Genome Sequencing (WGS)
+# Genome Sequencing (GS)
 
-This directory contains an example set of AI-ready metadata packages for a whole
-genome sequencing experiment:
-[`autism_wgs_composite.metadata.yaml`](autism_wgs_composite.metadata.yaml)
-(JSON twin: `autism_wgs_composite.metadata.json`).
+This directory contains an example set of AI-ready metadata packages for a genome
+sequencing experiment:
+[`autism_gs_composite.metadata.yaml`](autism_gs_composite.metadata.yaml)
+(JSON twin: `autism_gs_composite.metadata.json`).
 
-It accompanies the manuscript's autism-WGS use case, in which two sequencing
+It accompanies the manuscript's autism genome-sequencing use case, in which two sequencing
 centers (**B1** and **B2**) differ in the **proportion** of saliva-derived samples,
 in **sequencing-chemistry mix** (B1 all 2-channel; B2 a mix of 2- and 4-channel),
 and in **alignment/variant-calling pipeline** (BWA-MEM/GATK vs DRAGMAP/DRAGEN) —
@@ -23,7 +23,7 @@ Phenopacket), and provenance (W3C PROV) metadata, and ends with a flattened
 the manuscript's Supplementary Table 1.
 
 The companion workflow-provenance record is
-[`../../provenance/wgs_align_call_run.provenance.yaml`](../../provenance/wgs_align_call_run.provenance.yaml)
+[`../../provenance/gs_align_call_run.provenance.yaml`](../../provenance/gs_align_call_run.provenance.yaml)
 (the illustrative run for B1-0001);
 a blank, adaptable form is
 [`../../templates/genomic_metadata_package_template.yaml`](../../templates/genomic_metadata_package_template.yaml).

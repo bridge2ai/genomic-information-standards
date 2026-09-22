@@ -20,7 +20,7 @@ schema = json.load(open('schemas/genomic_metadata_package_v0.1.0.json'))
 data = yaml.safe_load(open(sys.argv[1]))
 errors = sorted(Draft202012Validator(schema).iter_errors(data), key=lambda e: list(e.path))
 [print(list(e.path), e.message) for e in errors] or print('valid')
-" examples/whole_exome_sequencing/wes_example.metadata.yaml
+" examples/exome_sequencing/es_example.metadata.yaml
 ```
 
 ## Scope and continued development
