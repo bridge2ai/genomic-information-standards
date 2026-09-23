@@ -3,6 +3,8 @@ prefixes:
   BioSample: "https://identifiers.org/biosample:"
   DOI: "https://doi.org/"
   biotools: "https://bio.tools/"
+  NCIT: "http://purl.obolibrary.org/obo/NCIT_"
+  CHEBI: "http://purl.obolibrary.org/obo/CHEBI_"
 
 metadata_package:
   package_id: "GIST-VCF-EX:0001"
@@ -13,6 +15,72 @@ metadata_package:
   description: >-
     Curated small-variant benchmark for Genome in a Bottle sample HG002 across
     273 challenging medically relevant genes, accompanied by its benchmark-region BED.
+
+  study:
+    bioproject: "-"
+    assay: "small-variant benchmark curation"
+    assay_id: "NCIT:C48660"
+    contact_email: "not applicable"
+    title: "NIST GIAB HG002 CMRG small-variant benchmark"
+    description: >-
+      Expert-curated small-variant benchmark for HG002 across challenging
+      medically relevant genes, distributed by NIST Genome in a Bottle.
+
+  sample:
+    sample_id: "HG002"
+    biosample: "-"
+    specimen_type:
+      label: "Cell line"
+      id: "NCIT:C16403"
+    biospecimen_type: "lymphoblastoid cell line"
+    analyte:
+      label: "Genomic DNA"
+      id: "CHEBI:16991"
+    collection_method:
+      label: "Not applicable"
+      id: "NCIT:C48660"
+    sampling_protocol: "See upstream GIAB documentation."
+    collection_date: "-"
+    collection_location: "-"
+    storage_conditions: "Not reported in the upstream benchmark record."
+    collection_site: "Not reported in the upstream benchmark record."
+    description: >-
+      HG002 (NA24385) is a Genome in a Bottle reference material. This
+      benchmark callset represents small variants for HG002.
+
+  sequencing:
+    platform: "not applicable"
+    instrument_model: "not applicable"
+    sbs_chemistry_channels: 0
+    library_source: "not applicable"
+    library_strategy: "not applicable"
+    library_selection: "not applicable"
+    library_construction: "not applicable"
+    library_preparation: "not applicable"
+    unique_molecular_identifiers: false
+    sequencing_method: "not applicable"
+    library_layout: "not applicable"
+    read_length_bp: 0
+    target_mean_coverage_x: 0
+    sequencing_date: "-"
+    sequencing_location: "-"
+    description: >-
+      This resource is a curated benchmark callset and does not represent one
+      sequencing assay or library preparation.
+
+  variant_callset:
+    file: "HG002_GRCh38_CMRG_smallvar_v1.00.vcf.gz"
+    vcf_version: "See ##fileformat in the VCF header."
+    checksum: "validation/sha256sums.txt"
+    normalization: >-
+      Upstream benchmark representation retained without local normalization
+      or modification.
+    variant_count: 0 # Temporary schema placeholder; replace with the validated total.
+    snv_count: 0     # Temporary schema placeholder; replace with the validated SNV count.
+    indel_count: 0   # Temporary schema placeholder; replace with the validated indel count.    
+    description: >-
+      HG002 GRCh38 CMRG v1.00 curated small-variant benchmark callset,
+      interpreted only with the accompanying benchmark-region BED.
 
   subject:
     subject_id: "HG002"
@@ -40,6 +108,7 @@ metadata_package:
     label: "GRCh38"
     embedded_metadata: "VCF ##reference and ##contig header records"
     coordinate_convention: "VCF positions are 1-based; accompanying BED intervals are 0-based, half-open"
+    seqcol_digest: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3" # Placeholder for schema validation only; replace after resolving the exact GRCh38 reference collection.
     exact_reference_uri: null
     exact_reference_note: "Resolve the exact reference artifact from the VCF header and upstream benchmark documentation."
 

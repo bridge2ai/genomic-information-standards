@@ -4,6 +4,7 @@ prefixes:
   ENSEMBL: "https://identifiers.org/ensembl:"
   HGNC: "https://bioregistry.io/hgnc:"
   biotools: "https://bio.tools/"
+  NCIT: "http://purl.obolibrary.org/obo/NCIT_"
 
 metadata_package:
   package_id: "GIST-GFF3-EX:0001"
@@ -16,6 +17,70 @@ metadata_package:
     Regional GFF3 annotation containing features overlapping the BRCA1 locus,
     derived from the GENCODE Human Release 49 comprehensive primary-assembly annotation.
 
+  study:
+    bioproject: "-"
+    assay: "reference annotation"
+    assay_id: "NCIT:C48660"
+    contact_email: "not applicable"
+    title: "GENCODE Human Release 49 comprehensive annotation"
+    description: >-
+      Public GENCODE Release 49 genome-feature annotation for the GRCh38
+      primary assembly, from which the BRCA1 regional GFF3 was derived.
+
+  sample:
+    sample_id: "not-applicable"
+    biosample: "-"
+    specimen_type:
+      label: "Not applicable"
+      id: "NCIT:C48660"
+    biospecimen_type: "not applicable"
+    analyte:
+      label: "Not applicable"
+      id: "NCIT:C48660"
+    collection_method:
+      label: "Not applicable"
+      id: "NCIT:C48660"
+    sampling_protocol: "not applicable"
+    collection_date: "-"
+    collection_location: "-"
+    storage_conditions: "not applicable"
+    collection_site: "not applicable"
+    description: >-
+      This resource is a reference genome annotation and is not derived from an
+      individual biological specimen.
+
+  sequencing:
+    platform: "not applicable"
+    instrument_model: "not applicable"
+    sbs_chemistry_channels: 0
+    library_source: "not applicable"
+    library_strategy: "not applicable"
+    library_selection: "not applicable"
+    library_construction: "not applicable"
+    library_preparation: "not applicable"
+    unique_molecular_identifiers: false
+    sequencing_method: "not applicable"
+    library_layout: "not applicable"
+    read_length_bp: 0
+    target_mean_coverage_x: 0
+    sequencing_date: "-"
+    sequencing_location: "-"
+    description: >-
+      No sequencing assay is represented by this regional GFF3; it is an
+      extracted annotation subset from a public reference annotation release.
+
+  variant_callset:
+    file: "not applicable"
+    vcf_version: "not applicable"
+    checksum: "not applicable"
+    normalization: "not applicable"
+    variant_count: 0
+    snv_count: 0
+    indel_count: 0
+    inferred_sex_karyotype: "not applicable"
+    description: >-
+      This reference annotation resource contains no sample-level variant calls.
+
   organism:
     label: "Homo sapiens"
     id: "NCBITaxon:9606"
@@ -25,6 +90,7 @@ metadata_package:
     assembly_accession: "INSDC:GCA_000001405.29"
     gencode_release: 49
     gencode_release_uri: "https://www.gencodegenes.org/human/release_49.html"
+    seqcol_digest: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3" # Placeholder for schema validation only; not applicable to this regional GFF3 reference-annotation exemplar.
     sequence_naming: "UCSC-style chr names"
     compatibility_note: "Sequence-region names match the corresponding GENCODE primary-assembly FASTA."
 

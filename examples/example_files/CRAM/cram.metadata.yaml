@@ -2,6 +2,9 @@ prefixes:
   NCBITaxon: "https://identifiers.org/taxonomy:"
   BioSample: "https://identifiers.org/biosample:"
   biotools: "https://bio.tools/"
+  NCIT: "http://purl.obolibrary.org/obo/NCIT_"
+  OBI: "http://purl.obolibrary.org/obo/OBI_"
+  CHEBI: "http://purl.obolibrary.org/obo/CHEBI_"
 
 metadata_package:
   package_id: "GIST-CRAM-EX:0001"
@@ -24,10 +27,34 @@ metadata_package:
     phenotype: null
     phenotype_note: "No phenotype or clinical interpretation is asserted by this file exemplar."
 
+  sample:
+    sample_id: "NA12878"
+    biosample: "BioSample:SAME123392"
+    specimen_type:
+      label: "Cell line"
+      id: "NCIT:C16403"
+    biospecimen_type: "lymphoblastoid cell line"
+    analyte:
+      label: "Genomic DNA"
+      id: "CHEBI:16991"
+    collection_method:
+      label: "Not applicable"
+      id: "NCIT:C48660"
+    sampling_protocol: "See International Genome Sample Resource documentation."
+    collection_date: "-"
+    collection_location: "-"
+    storage_conditions: "Not reported in the upstream alignment record."
+    collection_site: "Not reported in the upstream alignment record."
+    description: >-
+      NA12878 is a publicly available human reference sample represented by a
+      lymphoblastoid cell line. This regional CRAM contains Oxford Nanopore
+      whole-genome sequencing alignments for this sample.
+
   study:
     project: "1000 Genomes / International Genome Sample Resource"
     data_collection: "1KG_ONT_VIENNA"
     assay: "Oxford Nanopore whole-genome sequencing"
+    assay_id: "OBI:0002117"
     sample_page: "https://www.internationalgenome.org/data-portal/sample/NA12878"
     data_reuse_policy: "data reuse policy.txt"
 
@@ -47,10 +74,24 @@ metadata_package:
         platform_unit: "PAI05620"
         sample: "NA12878"
 
+  variant_callset:
+    file: "not applicable"
+    vcf_version: "not applicable"
+    checksum: "not applicable"
+    normalization: "not applicable"
+    variant_count: 0
+    snv_count: 0
+    indel_count: 0
+    inferred_sex_karyotype: "not applicable"
+    description: >-
+      This CRAM exemplar contains sequence alignments only and does not include
+      a sample-level variant callset.
+
   reference_assembly:
     label: "GRCh38"
     sequence_naming: "UCSC-style chr names"
     embedded_metadata: "@SQ records contain sequence names, lengths, and M5 sequence MD5 checksums"
+    seqcol_digest: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3" # Placeholder for schema validation only; the exact reference collection digest has not been established.
     producer_reference_uri: "/scratch/rausch/remap2/hg38.fa"
     producer_reference_uri_resolvable: false
     portability_note: >-
