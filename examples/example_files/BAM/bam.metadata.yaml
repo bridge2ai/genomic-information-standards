@@ -2,6 +2,9 @@ prefixes:
   NCBITaxon: "https://identifiers.org/taxonomy:"
   BioSample: "https://identifiers.org/biosample:"
   biotools: "https://bio.tools/"
+  NCIT: "http://purl.obolibrary.org/obo/NCIT_"
+  OBI: "http://purl.obolibrary.org/obo/OBI_"
+  CHEBI: "http://purl.obolibrary.org/obo/CHEBI_"
 
 metadata_package:
   package_id: "GIST-BAM-EX:0001"
@@ -22,9 +25,33 @@ metadata_package:
     phenotype: null
     phenotype_note: "No phenotype or clinical interpretation is asserted by this example."
 
+  sample:
+    sample_id: "HG002"
+    biosample: "-"
+    specimen_type:
+      label: "Cell line"
+      id: "NCIT:C16403"
+    biospecimen_type: "lymphoblastoid cell line"
+    analyte:
+      label: "Genomic DNA"
+      id: "CHEBI:16991"
+    collection_method:
+      label: "Not applicable"
+      id: "NCIT:C48660"
+    sampling_protocol: "See upstream GIAB documentation."
+    collection_date: "-"
+    collection_location: "-"
+    storage_conditions: "Not reported in the upstream alignment record."
+    collection_site: "Not reported in the upstream alignment record."
+    description: >-
+      HG002 (NA24385) is a Genome in a Bottle reference material. This
+      regional BAM contains alignments derived from its Illumina whole-genome
+      sequencing data.
+
   study:
     project: "NIST Genome in a Bottle"
     assay: "whole-genome sequencing"
+    assay_id: "OBI:0002117"
     upstream_collection: "AshkenazimTrio/HG002_NA24385_son"
 
   sequencing:
@@ -36,10 +63,24 @@ metadata_package:
       read_groups: "Inspect @RG records in the BAM header"
       sample_identifier: "Inspect SM tags in @RG records"
 
+  variant_callset:
+    file: "not applicable"
+    vcf_version: "not applicable"
+    checksum: "not applicable"
+    normalization: "not applicable"
+    variant_count: 0
+    snv_count: 0
+    indel_count: 0
+    inferred_sex_karyotype: "not applicable"
+    description: >-
+      This BAM exemplar contains sequence alignments only and does not include
+      a sample-level variant callset.
+
   reference_assembly:
     label: "GRCh38"
     sequence_naming: "UCSC-style chr names"
     embedded_metadata: "@SQ records contain reference names and lengths"
+    seqcol_digest: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3" # Placeholder for schema validation only; the exact reference collection digest has not been established.
     exact_reference_uri: null
     exact_reference_note: >-
       The exact reference artifact should be identified through the upstream
