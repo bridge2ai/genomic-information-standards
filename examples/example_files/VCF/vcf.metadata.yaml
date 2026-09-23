@@ -75,10 +75,9 @@ metadata_package:
     normalization: >-
       Upstream benchmark representation retained without local normalization
       or modification.
-    variant_count: <total VCF record count>
-    snv_count: <SNV record count>
-    indel_count: <indel record count>
-    inferred_sex_karyotype: "XY"
+    variant_count: 0 # Temporary schema placeholder; replace with the validated total.
+    snv_count: 0     # Temporary schema placeholder; replace with the validated SNV count.
+    indel_count: 0   # Temporary schema placeholder; replace with the validated indel count.    
     description: >-
       HG002 GRCh38 CMRG v1.00 curated small-variant benchmark callset,
       interpreted only with the accompanying benchmark-region BED.

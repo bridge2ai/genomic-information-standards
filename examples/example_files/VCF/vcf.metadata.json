@@ -68,10 +68,9 @@
             "vcf_version": "See ##fileformat in the VCF header.",
             "checksum": "validation/sha256sums.txt",
             "normalization": "Upstream benchmark representation retained without local normalization or modification.",
-            "variant_count": "<total VCF record count>",
-            "snv_count": "<SNV record count>",
-            "indel_count": "<indel record count>",
-            "inferred_sex_karyotype": "XY",
+            "variant_count": 0,
+            "snv_count": 0,
+            "indel_count": 0,
             "description": "HG002 GRCh38 CMRG v1.00 curated small-variant benchmark callset, interpreted only with the accompanying benchmark-region BED."
         },
         "subject": {
