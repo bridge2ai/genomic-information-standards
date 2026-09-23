@@ -1,0 +1,201 @@
+{
+    "prefixes": {
+        "NCBITaxon": "https://identifiers.org/taxonomy:",
+        "BioSample": "https://identifiers.org/biosample:",
+        "DOI": "https://doi.org/",
+        "biotools": "https://bio.tools/",
+        "NCIT": "http://purl.obolibrary.org/obo/NCIT_",
+        "CHEBI": "http://purl.obolibrary.org/obo/CHEBI_"
+    },
+    "metadata_package": {
+        "package_id": "GIST-VCF-EX:0001",
+        "schema_version": "0.1.0",
+        "title": "NIST GIAB HG002 GRCh38 CMRG small-variant benchmark example",
+        "resource_type": "small-variant benchmark callset",
+        "format": "VCF",
+        "description": "Curated small-variant benchmark for Genome in a Bottle sample HG002 across 273 challenging medically relevant genes, accompanied by its benchmark-region BED.",
+        "study": {
+            "bioproject": "-",
+            "assay": "small-variant benchmark curation",
+            "assay_id": "NCIT:C48660",
+            "contact_email": "not applicable",
+            "title": "NIST GIAB HG002 CMRG small-variant benchmark",
+            "description": "Expert-curated small-variant benchmark for HG002 across challenging medically relevant genes, distributed by NIST Genome in a Bottle."
+        },
+        "sample": {
+            "sample_id": "HG002",
+            "biosample": "-",
+            "specimen_type": {
+                "label": "Cell line",
+                "id": "NCIT:C16403"
+            },
+            "biospecimen_type": "lymphoblastoid cell line",
+            "analyte": {
+                "label": "Genomic DNA",
+                "id": "CHEBI:16991"
+            },
+            "collection_method": {
+                "label": "Not applicable",
+                "id": "NCIT:C48660"
+            },
+            "sampling_protocol": "See upstream GIAB documentation.",
+            "collection_date": "-",
+            "collection_location": "-",
+            "storage_conditions": "Not reported in the upstream benchmark record.",
+            "collection_site": "Not reported in the upstream benchmark record.",
+            "description": "HG002 (NA24385) is a Genome in a Bottle reference material. This benchmark callset represents small variants for HG002."
+        },
+        "sequencing": {
+            "platform": "not applicable",
+            "instrument_model": "not applicable",
+            "sbs_chemistry_channels": 0,
+            "library_source": "not applicable",
+            "library_strategy": "not applicable",
+            "library_selection": "not applicable",
+            "library_construction": "not applicable",
+            "library_preparation": "not applicable",
+            "unique_molecular_identifiers": false,
+            "sequencing_method": "not applicable",
+            "library_layout": "not applicable",
+            "read_length_bp": 0,
+            "target_mean_coverage_x": 0,
+            "sequencing_date": "-",
+            "sequencing_location": "-",
+            "description": "This resource is a curated benchmark callset and does not represent one sequencing assay or library preparation."
+        },
+        "variant_callset": {
+            "file": "HG002_GRCh38_CMRG_smallvar_v1.00.vcf.gz",
+            "vcf_version": "See ##fileformat in the VCF header.",
+            "checksum": "validation/sha256sums.txt",
+            "normalization": "Upstream benchmark representation retained without local normalization or modification.",
+            "variant_count": "<total VCF record count>",
+            "snv_count": "<SNV record count>",
+            "indel_count": "<indel record count>",
+            "inferred_sex_karyotype": "XY",
+            "description": "HG002 GRCh38 CMRG v1.00 curated small-variant benchmark callset, interpreted only with the accompanying benchmark-region BED."
+        },
+        "subject": {
+            "subject_id": "HG002",
+            "alternate_ids": [
+                "NA24385"
+            ],
+            "organism": {
+                "label": "Homo sapiens",
+                "id": "NCBITaxon:9606"
+            },
+            "subject_role": "Genome in a Bottle reference material",
+            "family_context": "AshkenazimTrio son",
+            "phenotype": null,
+            "phenotype_note": "No phenotype or clinical interpretation is asserted by this benchmark example."
+        },
+        "benchmark": {
+            "name": "Challenging Medically-Relevant Genes Benchmark Set",
+            "release": "CMRG v1.00",
+            "persistent_identifier": "DOI:10.18434/mds2-2475",
+            "landing_page": "https://catalog.data.gov/dataset/challenging-medically-relevant-genes-benchmark-set",
+            "publisher": "National Institute of Standards and Technology",
+            "scope": "273 challenging medically relevant genes",
+            "benchmark_description": "Expert-curated benchmark calls and corresponding regions for evaluating small-variant performance in difficult medically relevant genomic regions.",
+            "license_uri": "https://www.nist.gov/open/license"
+        },
+        "reference_assembly": {
+            "label": "GRCh38",
+            "embedded_metadata": "VCF ##reference and ##contig header records",
+            "coordinate_convention": "VCF positions are 1-based; accompanying BED intervals are 0-based, half-open",
+            "seqcol_digest": "Ba88PY52_qeifhJrgUXyin6UITdXNsg3",
+            "exact_reference_uri": null,
+            "exact_reference_note": "Resolve the exact reference artifact from the VCF header and upstream benchmark documentation."
+        },
+        "files": {
+            "variant_callset": {
+                "file": "HG002_GRCh38_CMRG_smallvar_v1.00.vcf.gz",
+                "format": "BGZF-compressed VCF",
+                "vcf_version": "Read from the ##fileformat header declaration",
+                "role": "unmodified upstream benchmark callset",
+                "source_uri": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/AshkenazimTrio/HG002_NA24385_son/CMRG_v1.00/GRCh38/SmallVariant/HG002_GRCh38_CMRG_smallvar_v1.00.vcf.gz",
+                "checksum": {
+                    "algorithm": "SHA-256",
+                    "manifest": "validation/sha256sums.txt"
+                }
+            },
+            "index": {
+                "file": "HG002_GRCh38_CMRG_smallvar_v1.00.vcf.gz.tbi",
+                "format": "Tabix index",
+                "indexes": "HG002_GRCh38_CMRG_smallvar_v1.00.vcf.gz",
+                "origin": "generated locally from the unmodified upstream VCF",
+                "generating_command": "bcftools index --tbi",
+                "software_reference": "validation/bcftools-version.txt",
+                "checksum": {
+                    "algorithm": "SHA-256",
+                    "manifest": "validation/sha256sums.txt"
+                }
+            },
+            "benchmark_regions": {
+                "file": "HG002_GRCh38_CMRG_smallvar_v1.00.bed",
+                "format": "BED",
+                "role": "regions over which the benchmark is intended to be interpreted",
+                "coordinate_convention": "0-based, half-open",
+                "source_uri": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/AshkenazimTrio/HG002_NA24385_son/CMRG_v1.00/GRCh38/SmallVariant/HG002_GRCh38_CMRG_smallvar_v1.00.bed",
+                "checksum": {
+                    "algorithm": "SHA-256",
+                    "manifest": "validation/sha256sums.txt"
+                }
+            }
+        },
+        "representation": {
+            "sample_identifiers": "validation/samples.txt",
+            "header": "validation/HG002_GRCh38_CMRG_smallvar_v1.00.header.vcf",
+            "fields": {
+                "fixed_columns": [
+                    "CHROM",
+                    "POS",
+                    "ID",
+                    "REF",
+                    "ALT",
+                    "QUAL",
+                    "FILTER",
+                    "INFO"
+                ],
+                "genotype_columns": "Defined by FORMAT and sample columns in the VCF header"
+            },
+            "regional_scope": "HG002 CMRG benchmark regions defined by the accompanying BED"
+        },
+        "validation": {
+            "complete_parse": {
+                "tool": "bcftools view",
+                "result": "VCF readable when validation was performed"
+            },
+            "compression_check": "bgzip --test",
+            "index_statistics": "validation/index-stats.tsv",
+            "contigs": "validation/contigs.txt",
+            "record_count": "validation/variant-count.txt",
+            "samples": "validation/samples.txt",
+            "summary_statistics": "validation/summary-statistics.tsv",
+            "complete_statistics": "validation/HG002_GRCh38_CMRG_smallvar_v1.00.bcftools-stats.txt",
+            "benchmark_region_overlap": "validation/bed-overlap-summary.tsv",
+            "preview": "validation/variant-preview.tsv",
+            "checksum_manifest": "validation/sha256sums.txt",
+            "software_manifest": "validation/bcftools-version.txt"
+        },
+        "provenance": {
+            "upstream_organization": "NIST Genome in a Bottle / NCBI",
+            "retrieved_at": "2026-09-01",
+            "source_dataset_uri": "https://doi.org/10.18434/mds2-2475",
+            "source_directory": "https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/AshkenazimTrio/HG002_NA24385_son/CMRG_v1.00/",
+            "documentation": "README.md"
+        },
+        "gist_alignment": [
+            "Stable HG002/NA24385 sample identifiers and the benchmark release are recorded.",
+            "GRCh38 reference and contig metadata are retained in the VCF header.",
+            "The VCF is explicitly paired with its intended benchmark-region BED.",
+            "VCF and BED coordinate conventions are distinguished.",
+            "The locally generated index is identified as a derived artifact with its generating command.",
+            "Checksums, software versions, record counts, variant summaries, and region-overlap results are linked."
+        ],
+        "limitations": [
+            "This benchmark is not a general-purpose clinical callset.",
+            "Interpretation is limited to HG002, GRCh38, CMRG v1.00, and the accompanying benchmark regions.",
+            "The VCF and BED should be treated as a related package rather than independent files."
+        ]
+    }
+}
