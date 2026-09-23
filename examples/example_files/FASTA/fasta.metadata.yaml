@@ -2,6 +2,7 @@ prefixes:
   NCBITaxon: "https://identifiers.org/taxonomy:"
   INSDC: "https://identifiers.org/insdc:"
   biotools: "https://bio.tools/"
+  NCIT: "http://purl.obolibrary.org/obo/NCIT_"
 
 metadata_package:
   package_id: "GIST-FASTA-EX:0001"
@@ -13,6 +14,69 @@ metadata_package:
     Regional reference sequence extracted from the GRCh38 primary-assembly
     genome FASTA distributed with GENCODE Human Release 49.
 
+  study:
+    bioproject: "-"
+    assay: "reference sequence"
+    assay_id: "NCIT:C48660"
+    contact_email: "not applicable"
+    title: "GENCODE Human Release 49 reference genome distribution"
+    description: >-
+      Public distribution of the GRCh38 primary-assembly reference genome
+      used to support human genome annotation and analysis.
+
+  sample:
+    sample_id: "not-applicable"
+    biosample: "-"
+    specimen_type:
+      label: "not applicable"
+      id: "NCIT:C48660"
+    biospecimen_type: "not applicable"
+    analyte:
+      label: "reference genome sequence"
+      id: "NCIT:C48660"
+    collection_method:
+      label: "not applicable"
+      id: "not applicable"
+    sampling_protocol: "not applicable"
+    collection_date: "-"
+    collection_location: "-"
+    storage_conditions: "not applicable"
+    collection_site: "not applicable"
+    description: >-
+      This resource is a reference assembly sequence and is not derived from
+      an individual biological specimen.
+
+  sequencing:
+    platform: "not applicable"
+    instrument_model: "not applicable"
+    sbs_chemistry_channels: 0
+    library_source: "not applicable"
+    library_strategy: "not applicable"
+    library_selection: "not applicable"
+    library_construction: "not applicable"
+    library_preparation: "not applicable"
+    unique_molecular_identifiers: false
+    sequencing_method: "not applicable"
+    library_layout: "not applicable"
+    read_length_bp: 0
+    target_mean_coverage_x: 0
+    sequencing_date: "-"
+    sequencing_location: "-"
+    description: >-
+      No sequencing assay is represented by this regional reference FASTA.
+
+  variant_callset:
+    file: "not applicable"
+    vcf_version: "not applicable"
+    checksum: "not applicable"
+    normalization: "not applicable"
+    variant_count: 0
+    snv_count: 0
+    indel_count: 0
+    inferred_sex_karyotype: "not applicable"
+    description: >-
+      This reference-sequence resource contains no sample-level variant calls.
+  
   organism:
     label: "Homo sapiens"
     id: "NCBITaxon:9606"
@@ -23,6 +87,7 @@ metadata_package:
     gencode_release: 49
     gencode_release_uri: "https://www.gencodegenes.org/human/release_49.html"
     sequence_naming: "UCSC-style chr names"
+    seqcol_digest: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3" # Placeholder only; not applicable to this regional FASTA exemplar.
     source_file: "GRCh38.primary_assembly.genome.fa.gz"
     source_uri: "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_49/GRCh38.primary_assembly.genome.fa.gz"
     source_committed: false

@@ -1,0 +1,162 @@
+{
+    "prefixes": {
+        "NCBITaxon": "https://identifiers.org/taxonomy:",
+        "INSDC": "https://identifiers.org/insdc:",
+        "biotools": "https://bio.tools/",
+        "NCIT": "http://purl.obolibrary.org/obo/NCIT_"
+    },
+    "metadata_package": {
+        "package_id": "GIST-FASTA-EX:0001",
+        "schema_version": "0.1.0",
+        "title": "GENCODE GRCh38 regional reference FASTA exemplar",
+        "resource_type": "reference sequence",
+        "format": "FASTA",
+        "description": "Regional reference sequence extracted from the GRCh38 primary-assembly genome FASTA distributed with GENCODE Human Release 49.",
+        "study": {
+            "bioproject": "-",
+            "assay": "reference sequence",
+            "assay_id": "NCIT:C48660",
+            "contact_email": "not applicable",
+            "title": "GENCODE Human Release 49 reference genome distribution",
+            "description": "Public distribution of the GRCh38 primary-assembly reference genome used to support human genome annotation and analysis."
+        },
+        "sample": {
+            "sample_id": "not-applicable",
+            "biosample": "-",
+            "specimen_type": {
+                "label": "not applicable",
+                "id": "NCIT:C48660"
+            },
+            "biospecimen_type": "not applicable",
+            "analyte": {
+                "label": "reference genome sequence",
+                "id": "NCIT:C48660"
+            },
+            "collection_method": {
+                "label": "not applicable",
+                "id": "not applicable"
+            },
+            "sampling_protocol": "not applicable",
+            "collection_date": "-",
+            "collection_location": "-",
+            "storage_conditions": "not applicable",
+            "collection_site": "not applicable",
+            "description": "This resource is a reference assembly sequence and is not derived from an individual biological specimen."
+        },
+        "sequencing": {
+            "platform": "not applicable",
+            "instrument_model": "not applicable",
+            "sbs_chemistry_channels": 0,
+            "library_source": "not applicable",
+            "library_strategy": "not applicable",
+            "library_selection": "not applicable",
+            "library_construction": "not applicable",
+            "library_preparation": "not applicable",
+            "unique_molecular_identifiers": false,
+            "sequencing_method": "not applicable",
+            "library_layout": "not applicable",
+            "read_length_bp": 0,
+            "target_mean_coverage_x": 0,
+            "sequencing_date": "-",
+            "sequencing_location": "-",
+            "description": "No sequencing assay is represented by this regional reference FASTA."
+        },
+        "variant_callset": {
+            "file": "not applicable",
+            "vcf_version": "not applicable",
+            "checksum": "not applicable",
+            "normalization": "not applicable",
+            "variant_count": 0,
+            "snv_count": 0,
+            "indel_count": 0,
+            "inferred_sex_karyotype": "not applicable",
+            "description": "This reference-sequence resource contains no sample-level variant calls."
+        },
+        "organism": {
+            "label": "Homo sapiens",
+            "id": "NCBITaxon:9606"
+        },
+        "reference_assembly": {
+            "label": "GRCh38 primary assembly",
+            "assembly_accession": "INSDC:GCA_000001405.29",
+            "gencode_release": 49,
+            "gencode_release_uri": "https://www.gencodegenes.org/human/release_49.html",
+            "sequence_naming": "UCSC-style chr names",
+            "seqcol_digest": "Ba88PY52_qeifhJrgUXyin6UITdXNsg3",
+            "source_file": "GRCh38.primary_assembly.genome.fa.gz",
+            "source_uri": "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_49/GRCh38.primary_assembly.genome.fa.gz",
+            "source_committed": false,
+            "source_not_committed_reason": "The complete reference genome exceeds GitHub file-size limits."
+        },
+        "derivation": {
+            "tool": "samtools faidx",
+            "tool_id": "biotools:samtools",
+            "version_reference": "validation/samtools-version.txt",
+            "source_sequence": "chr20",
+            "interval": "chr20:10000000-10100000",
+            "coordinate_convention": "1-based, end-inclusive samtools region syntax",
+            "expected_length_bp": 100001,
+            "transformation": "The requested interval was extracted without nucleotide modification."
+        },
+        "files": {
+            "sequence": {
+                "file": "GRCh38.chr20_10000000-10100000.fa",
+                "format": "FASTA",
+                "role": "regional reference example",
+                "sequence_identifier": "chr20:10000000-10100000",
+                "checksum": {
+                    "algorithm": "SHA-256",
+                    "manifest": "validation/sha256sums.txt"
+                }
+            },
+            "index": {
+                "file": "GRCh38.chr20_10000000-10100000.fa.fai",
+                "format": "FAI",
+                "indexes": "GRCh38.chr20_10000000-10100000.fa",
+                "checksum": {
+                    "algorithm": "SHA-256",
+                    "manifest": "validation/sha256sums.txt"
+                }
+            },
+            "sequence_dictionary": {
+                "file": "GRCh38.chr20_10000000-10100000.dict",
+                "format": "SAM sequence dictionary",
+                "describes": "GRCh38.chr20_10000000-10100000.fa",
+                "checksum": {
+                    "algorithm": "SHA-256",
+                    "manifest": "validation/sha256sums.txt"
+                }
+            }
+        },
+        "validation": {
+            "observed_sequence_length_bp": 100001,
+            "expected_sequence_length_bp": 100001,
+            "length_check": "passed",
+            "indexed_retrieval": "passed",
+            "sequence_composition": "validation/sequence-summary.tsv",
+            "checksum_manifest": "validation/sha256sums.txt",
+            "software_manifest": "validation/samtools-version.txt",
+            "composition_scope_note": "GC and ambiguous-base values describe only the extracted interval."
+        },
+        "provenance": {
+            "upstream_organization": "GENCODE / EMBL-EBI",
+            "retrieved_at": "2026-09-03",
+            "source_uri": "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_49/GRCh38.primary_assembly.genome.fa.gz",
+            "documentation": "README.md"
+        },
+        "gist_alignment": [
+            "Reference assembly, distribution release, source URI, and retrieval date are recorded.",
+            "The FASTA is paired with its FAI index and sequence dictionary as a reference bundle.",
+            "The coordinate convention and regional derivation are explicit.",
+            "Checksums provide byte-level file identity; sequence digests can provide content-level identity.",
+            "Sequence length, composition, and indexed retrieval are validated.",
+            "The sequence naming convention is documented for cross-format compatibility."
+        ],
+        "limitations": [
+            "This regional FASTA is not a replacement for the complete GRCh38 assembly.",
+            "The regional sequence identifier is not a globally recognized chromosome identifier.",
+            "Coordinates in outputs generated against the regional FASTA may be relative to the extracted sequence.",
+            "No subject, specimen, assay, consent, or phenotype metadata apply to a reference sequence resource."
+        ]
+    }
+}
