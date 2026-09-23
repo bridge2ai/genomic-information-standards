@@ -2,7 +2,7 @@
 # Example AI-ready metadata package(s) - Whole Genome Sequencing
 # Bridge2AI Genomic Information Standards (GIST) - companion implementation
 #
-# Accompanies the manuscript's autism-WGS use case (two sequencing centers, B1
+# Accompanies the manuscript's autism genome-sequencing use case (two sequencing centers, B1
 # and B2). The synthetic-data notice is the machine-readable `_disclaimer` field
 # below (kept in-data so it survives serialization to JSON).
 #
@@ -78,7 +78,7 @@ _reference_grch38: &ref
 metadata_packages:
 
   # -- B1-0001: B1, blood, 2-channel (NovaSeq 6000), BWA-MEM/GATK -------------
-  - package_id: "GIST-WGS-EX:B1-0001"
+  - package_id: "GIST-GS-EX:B1-0001"
     schema_version: "0.1.0"
     study: { bioproject: "<BioProject accession>", assay: "whole genome sequencing", assay_id: "OBI:0002117" }
     subject:
@@ -115,7 +115,7 @@ metadata_packages:
       alignment:       { tool: "bwa-mem", tool_id: "biotools:bwa", version: "0.7.17", container: "sha256:<digest>", parameters: "-M -K 100000000" }
       variant_calling: { tool: "gatk-haplotypecaller", tool_id: "biotools:gatk", version: "4.4.0.0", container: "sha256:<digest>", parameters: "--ploidy 2 -ERC GVCF" }
       read_mapping_quality: "MAPQ>=20 retained"
-      workflow:        { engine: "nextflow", version: "24.04.0", run_id: "<uuid>", commit_sha: "<git sha>", provenance: "../../provenance/wgs_align_call_run.provenance.yaml" }
+      workflow:        { engine: "nextflow", version: "24.04.0", run_id: "<uuid>", commit_sha: "<git sha>", provenance: "../../provenance/gs_align_call_run.provenance.yaml" }
     sequence_data:                                  # Table 2 MUST storage formats
       fastq: [ { file: "B1-0001_R1.fastq.gz", checksum: "sha256:<digest>" }, { file: "B1-0001_R2.fastq.gz", checksum: "sha256:<digest>" } ]
       cram:  { file: "B1-0001.cram", checksum: "sha256:<digest>", reference_seqcol: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3" }   # CRAM pins its reference
@@ -165,7 +165,7 @@ metadata_packages:
       generated_at: "2026-01-15T04:22:10Z"           # processing time (may post-date sequencing)
       reference_manifest_digest: "sha256:<lock-digest>"
       pipeline_commit_sha: "<git sha>"
-      prov_record: "../../provenance/wgs_align_call_run.provenance.yaml"   # W3C PROV (this record is B1-0001's run)
+      prov_record: "../../provenance/gs_align_call_run.provenance.yaml"   # W3C PROV (this record is B1-0001's run)
     analysis_covariates:
       { site: "B1", specimen_type: "blood", sbs_chemistry_channels: 2, aligner: "bwa-mem",
         variant_caller: "gatk-haplotypecaller", mean_coverage_x: 31.4, contamination_freemix: 0.005,
@@ -173,7 +173,7 @@ metadata_packages:
 
   # -- B1-0002: B1, SALIVA, 2-channel (NovaSeq 6000), BWA-MEM/GATK ------------
   #    (saliva on GOOD chemistry -> saliva is not tied to the 4-channel arm)
-  - package_id: "GIST-WGS-EX:B1-0002"
+  - package_id: "GIST-GS-EX:B1-0002"
     schema_version: "0.1.0"
     study: { bioproject: "<BioProject accession>", assay: "whole genome sequencing", assay_id: "OBI:0002117" }
     subject:
@@ -258,7 +258,7 @@ metadata_packages:
 
   # -- B2-0001: B2, blood, 2-channel (NovaSeq 6000), DRAGMAP/DRAGEN -----------
   #    (AFR-majority ancestry on GOOD chemistry -> ancestry not tied to a "worse" arm)
-  - package_id: "GIST-WGS-EX:B2-0001"
+  - package_id: "GIST-GS-EX:B2-0001"
     schema_version: "0.1.0"
     study: { bioproject: "<BioProject accession>", assay: "whole genome sequencing", assay_id: "OBI:0002117" }
     subject:
@@ -343,7 +343,7 @@ metadata_packages:
 
   # -- B2-0002: B2, BLOOD, 4-CHANNEL (HiSeq X Ten), DRAGMAP/DRAGEN ------------
   #    (4-channel on BLOOD -> chemistry effect is separable from specimen)
-  - package_id: "GIST-WGS-EX:B2-0002"
+  - package_id: "GIST-GS-EX:B2-0002"
     schema_version: "0.1.0"
     study: { bioproject: "<BioProject accession>", assay: "whole genome sequencing", assay_id: "OBI:0002117" }
     subject:
@@ -427,7 +427,7 @@ metadata_packages:
         human_read_fraction: 0.989, ancestry_pc: [ 0.041, -0.020, 0.008 ] }
 
   # -- B2-0003: B2, SALIVA, 2-channel (NovaSeq 6000), DRAGMAP/DRAGEN ----------
-  - package_id: "GIST-WGS-EX:B2-0003"
+  - package_id: "GIST-GS-EX:B2-0003"
     schema_version: "0.1.0"
     study: { bioproject: "<BioProject accession>", assay: "whole genome sequencing", assay_id: "OBI:0002117" }
     subject:

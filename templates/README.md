@@ -9,5 +9,5 @@ Templates may be provided in multiple formats, including JSON, YAML, TSV, and sp
 - [`genomic_metadata_package_template.yaml`](genomic_metadata_package_template.yaml)
   (JSON twin: `genomic_metadata_package_template.json`) — a blank, annotated
   metadata package covering sample, sequencing, reference, processing/workflow,
-  variant, QC, ancestry, phenotype, and provenance metadata for WGS/WES/panel
+  variant, QC, ancestry, phenotype, and provenance metadata for GS/ES/panel
   assays. Worked instances are in [`../examples/`](../examples/).

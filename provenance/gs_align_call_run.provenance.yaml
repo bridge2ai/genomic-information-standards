@@ -1,5 +1,5 @@
 # =============================================================================
-# Workflow-run provenance record - WGS alignment + variant calling
+# Workflow-run provenance record - GS alignment + variant calling
 # Bridge2AI Genomic Information Standards (GIST)
 #
 # Structured after the W3C PROV activity/entity model: each activity records the
@@ -11,7 +11,7 @@
 #
 # This is the illustrative run for sample B1-0001; its final `generated` entity is
 # that sample's gVCF, so the PROV chain closes onto the example package in
-# ../examples/whole_genome_sequencing/autism_wgs_composite.metadata.yaml. Each real
+# ../examples/genome_sequencing/autism_gs_composite.metadata.yaml. Each real
 # sample carries its own record of the same shape - which is what makes B1's
 # (BWA-MEM/GATK) and B2's (DRAGMAP/DRAGEN) heterogeneous pipelines comparable.
 # =============================================================================
@@ -26,7 +26,7 @@ workflow_run:
   run_id: "<uuid>"
   ended: "2026-01-15T04:22:10Z"
   workflow:
-    name: "wgs-align-call"
+    name: "gs-align-call"
     version: "2.3.1"
     commit: "<git sha>"                          # pinned pipeline revision
     engine: "nextflow 24.04.0"

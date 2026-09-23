@@ -11,7 +11,7 @@
     "ORCID": "https://orcid.org/"
   },
   "metadata_package": {
-    "package_id": "GIST-WES-EX:0001",
+    "package_id": "GIST-ES-EX:0001",
     "schema_version": "0.1.0",
     "study": {
       "bioproject": "<BioProject accession>",
@@ -19,7 +19,7 @@
       "assay_id": "OBI:0002118"
     },
     "subject": {
-      "subject_id": "WES-0001",
+      "subject_id": "ES-0001",
       "key_clinical_diagnosis": {
         "label": "autism spectrum disorder",
         "id": "MONDO:0005258"
@@ -28,7 +28,7 @@
       "pathological_state": "affected"
     },
     "sample": {
-      "sample_id": "WES-0001",
+      "sample_id": "ES-0001",
       "biosample": "<BioSample accession>",
       "specimen_type": {
         "label": "blood",
@@ -101,16 +101,16 @@
     "sequence_data": {
       "fastq": [
         {
-          "file": "WES-0001_R1.fastq.gz",
+          "file": "ES-0001_R1.fastq.gz",
           "checksum": "sha256:<digest>"
         },
         {
-          "file": "WES-0001_R2.fastq.gz",
+          "file": "ES-0001_R2.fastq.gz",
           "checksum": "sha256:<digest>"
         }
       ],
       "cram": {
-        "file": "WES-0001.cram",
+        "file": "ES-0001.cram",
         "checksum": "sha256:<digest>",
         "reference_seqcol": "Ba88PY52_qeifhJrgUXyin6UITdXNsg3"
       },
@@ -125,7 +125,7 @@
       }
     },
     "variant_callset": {
-      "file": "WES-0001.g.vcf.gz",
+      "file": "ES-0001.g.vcf.gz",
       "vcf_version": "4.3",
       "checksum": "sha256:<digest>",
       "normalization": "fully-justified (GA4GH VRS)",

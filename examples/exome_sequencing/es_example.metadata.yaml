@@ -2,7 +2,7 @@
 # Example AI-ready metadata package - Whole Exome Sequencing
 # Bridge2AI Genomic Information Standards (GIST)
 #
-# Same package shape as the WGS example, adapted to a capture-based exome assay
+# Same package shape as the GS example, adapted to a capture-based exome assay
 # (adds a `capture` block + capture-specific QC). The synthetic-data notice is the
 # machine-readable `_disclaimer` field below (survives JSON). Ontology anchoring
 # follows the manuscript's Supplementary Table 1; the full MUST field set is in
@@ -27,18 +27,18 @@ prefixes:                                   # CURIE -> base IRI
   ORCID:  "https://orcid.org/"
 
 metadata_package:
-  package_id: "GIST-WES-EX:0001"
+  package_id: "GIST-ES-EX:0001"
   schema_version: "0.1.0"
   study: { bioproject: "<BioProject accession>", assay: "whole exome sequencing", assay_id: "OBI:0002118" }
 
   subject:
-    subject_id: "WES-0001"
+    subject_id: "ES-0001"
     key_clinical_diagnosis: { label: "autism spectrum disorder", id: "MONDO:0005258" }   # per NCIT:C15607
     sex_assigned_at_birth: "male"                # per GSSO:009418
     pathological_state: "affected"               # per FairGenomes PathologicalState
 
   sample:
-    sample_id: "WES-0001"
+    sample_id: "ES-0001"
     biosample: "<BioSample accession>"
     specimen_type: { label: "blood", id: "UBERON:0000178" }
     biospecimen_type: "whole blood"              # per NCIT:C70713
@@ -82,13 +82,13 @@ metadata_package:
     workflow:        { engine: "nextflow", version: "24.04.0", run_id: "<uuid>", commit_sha: "<git sha>", provenance: "<path to this sample's W3C PROV record (same shape as ../../provenance/)>" }
 
   sequence_data:                                  # Table 2 MUST storage formats
-    fastq: [ { file: "WES-0001_R1.fastq.gz", checksum: "sha256:<digest>" }, { file: "WES-0001_R2.fastq.gz", checksum: "sha256:<digest>" } ]
-    cram:  { file: "WES-0001.cram", checksum: "sha256:<digest>", reference_seqcol: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3" }
+    fastq: [ { file: "ES-0001_R1.fastq.gz", checksum: "sha256:<digest>" }, { file: "ES-0001_R2.fastq.gz", checksum: "sha256:<digest>" } ]
+    cram:  { file: "ES-0001.cram", checksum: "sha256:<digest>", reference_seqcol: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3" }
     reference_fasta: { file: "<GRCh38.fa>", checksum: "md5:<fasta-md5>" }
     feature_annotation: { file: "<annotation.gff3.gz>", format: "GFF3", checksum: "sha256:<digest>" }
 
   variant_callset:
-    file: "WES-0001.g.vcf.gz"                      # gVCF (Table 2 MUST)
+    file: "ES-0001.g.vcf.gz"                      # gVCF (Table 2 MUST)
     vcf_version: "4.3"
     checksum: "sha256:<digest>"
     normalization: "fully-justified (GA4GH VRS)"   # VRS uses fully-justified normalization, not left-alignment
@@ -117,7 +117,7 @@ metadata_package:
     contamination_freemix: 0.005                  # VerifyBamID2 = within-species (human-human) contamination
     human_read_fraction: 0.991                    # blood
     duplicate_rate: 0.093
-    ti_tv: 3.02                                    # exome Ti/Tv runs higher than WGS
+    ti_tv: 3.02                                    # exome Ti/Tv runs higher than genome
     sex_concordance: "concordant"                  # phenotype.reported_sex vs variant_callset.inferred_sex_karyotype
 
   phenotype:

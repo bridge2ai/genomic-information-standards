@@ -6,7 +6,7 @@ panel: [`panel_example.metadata.yaml`](panel_example.metadata.yaml) (JSON twin:
 
 It illustrates assay-specific metadata, targeted regions, sequencing platform
 information, variant representation, and supporting quality control metrics, using
-the same package structure as the [WGS example](../whole_genome_sequencing/): it
+the same package structure as the [GS example](../genome_sequencing/): it
 adds a `panel` block (panel name/version, gene count, a sample of well-established
 ASD genes with real HGNC ids, and a real GRCh38 target-regions BED —
 [`targets/ndd_panel_v2.1.bed`](targets/ndd_panel_v2.1.bed), covering the spans of
