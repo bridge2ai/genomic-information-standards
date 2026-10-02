@@ -96,6 +96,10 @@ metadata_package:
   processing:
     alignment:       { tool: "bwa-mem", tool_id: "biotools:bwa", version: "0.7.17", container: "sha256:<digest>", parameters: "-M" }
     variant_calling: { tool: "gatk-haplotypecaller", tool_id: "biotools:gatk", version: "4.4.0.0", container: "sha256:<digest>", parameters: "-L <production panel target BED> --ploidy 2" }
+    annotation:                       # knowledge resources used to annotate the callset, and the INFO fields each populated
+      - { resource: "gnomAD",  version: "v4.1",       info_fields: ["<gnomAD allele-frequency fields>"] }
+      - { resource: "ClinVar", version: "2026-01-06", info_fields: ["<ClinVar fields, e.g. CLNSIG>"] }
+      - { resource: "dbNSFP",  version: "4.7a",       info_fields: ["<dbNSFP score fields>"] }
     read_mapping_quality: "MAPQ>=20 retained"
     workflow:        { engine: "nextflow", version: "24.04.0", run_id: "<uuid>", commit_sha: "<git sha>", provenance: "<path to this sample's W3C PROV record (same shape as ../../provenance/)>" }
 
@@ -109,19 +113,21 @@ metadata_package:
     file: "PANEL-0001.g.vcf.gz"                    # gVCF (Table 2 MUST)
     vcf_version: "4.3"
     checksum: "sha256:<digest>"
-    normalization: "fully-justified (GA4GH VRS)"
+    normalization: "left-aligned, parsimonious (bcftools norm -f <GRCh38.fa>)"   # the VCF rows themselves; VRS normalization applies only to VRS IDs (see variant_representation)
     variant_count: 214
     snv_count: 193
     indel_count: 21                               # no ti_tv on a sub-megabase panel: too few sites for a stable estimate
     inferred_sex_karyotype: "XX"                  # per FairGenomes GenotypicSex
-    variant_representation:                       # GA4GH VRS - Table 6 MUST (illustrative allele)
-      - vrs_id: "<ga4gh:VA.* - compute with vrs-python against the seqcol-pinned reference>"
-        hgvs_g: "<GRCh38 g. HGVS expression>"
-        variant_quality: 2140.0
-        total_depth: 512
-        ref_supporting_reads: 261
-        alt_supporting_reads: 251
-    reference_stamps: { gnomad: "v4.1", clinvar: "2026-01-06", dbnsfp: "4.7a" }
+    variant_representation:                       # where the Table 6 MUST elements are carried in the callset (locations, not values)
+      vrs_allele_id:
+        location: "INFO/VRS_Allele_IDs"            # vrs-python VCF annotator; Number=R (REF + ALTs, GT-index order)
+        normalization: "fully-justified (GA4GH VRS)"
+        tool: { name: "vrs-python", version: "<x.y.z>" }
+        reference_seqcol: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3"
+      hgvs_g:          { location: "INFO/CSQ, subfield HGVSg" }   # VEP --hgvsg; vrs-python does not emit HGVS
+      variant_quality: { location: "QUAL" }
+      total_depth:     { location: "FORMAT/DP" }
+      allele_depths:   { location: "FORMAT/AD" }
 
   qc:
     mean_target_coverage_x: 512.4

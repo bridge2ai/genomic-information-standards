@@ -99,6 +99,10 @@ metadata_package:
   processing:
     alignment:       { tool: "<tool>", tool_id: "<biotools:slug | EDAM>", version: "<x.y.z>", container: "sha256:<digest>", parameters: "<args>" }
     variant_calling: { tool: "<tool>", tool_id: "<biotools:slug | EDAM>", version: "<x.y.z>", container: "sha256:<digest>", parameters: "<args>" }
+    annotation:                       # knowledge resources used to annotate the callset, and the INFO fields each populated
+      - { resource: "gnomAD",  version: "<release>",       info_fields: ["<gnomAD allele-frequency fields>"] }
+      - { resource: "ClinVar", version: "<snapshot date>", info_fields: ["<ClinVar fields, e.g. CLNSIG>"] }
+      - { resource: "dbNSFP",  version: "<release>",       info_fields: ["<dbNSFP score fields>"] }
     analyses_performed: "<e.g. germline SNV/indel calling>"   # per FairGenomes AnalysesPerformed
     read_mapping_quality: "<e.g. MAPQ>=20 retained>"          # MUST (main text)
     deviations: "<protocol deviations | none>"               # MUST (main text)
@@ -120,19 +124,21 @@ metadata_package:
     file: "<sample.g.vcf.gz>"                    # gVCF (Suppl Table 2 MUST; min version 4.2)
     vcf_version: "<4.2 | 4.3>"
     checksum: "sha256:<digest>"
-    normalization: "fully-justified (GA4GH VRS)"   # VRS uses fully-justified normalization, NOT left-alignment
+    normalization: "<representation of the VCF rows, e.g. left-aligned, parsimonious (bcftools norm -f <ref>)>"   # VRS normalization applies only to VRS IDs (see variant_representation)
     variant_count: <int>
     snv_count: <int>
     indel_count: <int>                           # snv_count + indel_count should equal variant_count
     inferred_sex_karyotype: "<XX | XY | ...>"    # genotypic sex from the callset (per FairGenomes GenotypicSex)
-    variant_representation:                       # GA4GH VRS - Table 6 MUST (one worked allele, computed with vrs-python)
-      - vrs_id: "<ga4gh:VA.* computed against the seqcol-pinned reference>"
-        hgvs_g: "<GRCh38 g. HGVS expression>"
-        variant_quality: <QUAL>
-        total_depth: <DP>
-        ref_supporting_reads: <AD[0]>
-        alt_supporting_reads: <AD[1]>
-    reference_stamps: { gnomad: "<release>", clinvar: "<snapshot date>", dbnsfp: "<release>" }
+    variant_representation:                       # where the Table 6 MUST elements are carried in the callset (locations, not values)
+      vrs_allele_id:
+        location: "INFO/VRS_Allele_IDs"            # vrs-python VCF annotator; Number=R (REF + ALTs, GT-index order)
+        normalization: "fully-justified (GA4GH VRS)"
+        tool: { name: "vrs-python", version: "<x.y.z>" }
+        reference_seqcol: "<seqcol digest>"
+      hgvs_g:          { location: "INFO/CSQ, subfield HGVSg" }   # VEP --hgvsg; vrs-python does not emit HGVS
+      variant_quality: { location: "QUAL" }
+      total_depth:     { location: "FORMAT/DP" }
+      allele_depths:   { location: "FORMAT/AD" }
 
   # --- GENETIC ANCESTRY (omit for small panels; say so if omitted) ----------
   genetic_ancestry:
