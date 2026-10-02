@@ -133,6 +133,29 @@
           "container": "sha256:<digest>",
           "parameters": "--ploidy 2 -ERC GVCF"
         },
+        "annotation": [
+          {
+            "resource": "gnomAD",
+            "version": "v4.1",
+            "info_fields": [
+              "<gnomAD allele-frequency fields>"
+            ]
+          },
+          {
+            "resource": "ClinVar",
+            "version": "2026-01-06",
+            "info_fields": [
+              "<ClinVar fields, e.g. CLNSIG>"
+            ]
+          },
+          {
+            "resource": "dbNSFP",
+            "version": "4.7a",
+            "info_fields": [
+              "<dbNSFP score fields>"
+            ]
+          }
+        ],
         "read_mapping_quality": "MAPQ>=20 retained",
         "workflow": {
           "engine": "nextflow",
@@ -172,25 +195,33 @@
         "file": "B1-0001.g.vcf.gz",
         "vcf_version": "4.3",
         "checksum": "sha256:<digest>",
-        "normalization": "fully-justified (GA4GH VRS)",
+        "normalization": "left-aligned, parsimonious (bcftools norm -f <GRCh38.fa>)",
         "variant_count": 4820000,
         "snv_count": 4180000,
         "indel_count": 640000,
         "inferred_sex_karyotype": "XY",
-        "variant_representation": [
-          {
-            "vrs_id": "<ga4gh:VA.* - compute with vrs-python against the seqcol-pinned reference>",
-            "hgvs_g": "<GRCh38 g. HGVS expression>",
-            "variant_quality": 812.3,
-            "total_depth": 42,
-            "ref_supporting_reads": 21,
-            "alt_supporting_reads": 21
+        "variant_representation": {
+          "vrs_allele_id": {
+            "location": "INFO/VRS_Allele_IDs",
+            "normalization": "fully-justified (GA4GH VRS)",
+            "tool": {
+              "name": "vrs-python",
+              "version": "<x.y.z>"
+            },
+            "reference_seqcol": "Ba88PY52_qeifhJrgUXyin6UITdXNsg3"
+          },
+          "hgvs_g": {
+            "location": "INFO/CSQ, subfield HGVSg"
+          },
+          "variant_quality": {
+            "location": "QUAL"
+          },
+          "total_depth": {
+            "location": "FORMAT/DP"
+          },
+          "allele_depths": {
+            "location": "FORMAT/AD"
           }
-        ],
-        "reference_stamps": {
-          "gnomad": "v4.1",
-          "clinvar": "2026-01-06",
-          "dbnsfp": "4.7a"
         }
       },
       "genetic_ancestry": {
@@ -351,6 +382,29 @@
           "container": "sha256:<digest>",
           "parameters": "--ploidy 2 -ERC GVCF"
         },
+        "annotation": [
+          {
+            "resource": "gnomAD",
+            "version": "v4.1",
+            "info_fields": [
+              "<gnomAD allele-frequency fields>"
+            ]
+          },
+          {
+            "resource": "ClinVar",
+            "version": "2026-01-06",
+            "info_fields": [
+              "<ClinVar fields, e.g. CLNSIG>"
+            ]
+          },
+          {
+            "resource": "dbNSFP",
+            "version": "4.7a",
+            "info_fields": [
+              "<dbNSFP score fields>"
+            ]
+          }
+        ],
         "read_mapping_quality": "MAPQ>=20 retained",
         "workflow": {
           "engine": "nextflow",
@@ -390,16 +444,11 @@
         "file": "B1-0002.g.vcf.gz",
         "vcf_version": "4.3",
         "checksum": "sha256:<digest>",
-        "normalization": "fully-justified (GA4GH VRS)",
+        "normalization": "left-aligned, parsimonious (bcftools norm -f <GRCh38.fa>)",
         "variant_count": 4818000,
         "snv_count": 4180000,
         "indel_count": 638000,
-        "inferred_sex_karyotype": "XX",
-        "reference_stamps": {
-          "gnomad": "v4.1",
-          "clinvar": "2026-01-06",
-          "dbnsfp": "4.7a"
-        }
+        "inferred_sex_karyotype": "XX"
       },
       "genetic_ancestry": {
         "method": "PCA projection onto 1000 Genomes reference",
@@ -542,6 +591,29 @@
           "container": "sha256:<digest>",
           "parameters": "--vc-emit-ref-confidence GVCF"
         },
+        "annotation": [
+          {
+            "resource": "gnomAD",
+            "version": "v4.1",
+            "info_fields": [
+              "<gnomAD allele-frequency fields>"
+            ]
+          },
+          {
+            "resource": "ClinVar",
+            "version": "2026-01-06",
+            "info_fields": [
+              "<ClinVar fields, e.g. CLNSIG>"
+            ]
+          },
+          {
+            "resource": "dbNSFP",
+            "version": "4.7a",
+            "info_fields": [
+              "<dbNSFP score fields>"
+            ]
+          }
+        ],
         "read_mapping_quality": "MAPQ>=20 retained",
         "workflow": {
           "engine": "nextflow",
@@ -581,16 +653,11 @@
         "file": "B2-0001.g.vcf.gz",
         "vcf_version": "4.3",
         "checksum": "sha256:<digest>",
-        "normalization": "fully-justified (GA4GH VRS)",
+        "normalization": "left-aligned, parsimonious (bcftools norm -f <GRCh38.fa>)",
         "variant_count": 5820000,
         "snv_count": 5000000,
         "indel_count": 820000,
-        "inferred_sex_karyotype": "XY",
-        "reference_stamps": {
-          "gnomad": "v4.1",
-          "clinvar": "2026-01-06",
-          "dbnsfp": "4.7a"
-        }
+        "inferred_sex_karyotype": "XY"
       },
       "genetic_ancestry": {
         "method": "PCA projection onto 1000 Genomes reference",
@@ -733,6 +800,29 @@
           "container": "sha256:<digest>",
           "parameters": "--vc-emit-ref-confidence GVCF"
         },
+        "annotation": [
+          {
+            "resource": "gnomAD",
+            "version": "v4.1",
+            "info_fields": [
+              "<gnomAD allele-frequency fields>"
+            ]
+          },
+          {
+            "resource": "ClinVar",
+            "version": "2026-01-06",
+            "info_fields": [
+              "<ClinVar fields, e.g. CLNSIG>"
+            ]
+          },
+          {
+            "resource": "dbNSFP",
+            "version": "4.7a",
+            "info_fields": [
+              "<dbNSFP score fields>"
+            ]
+          }
+        ],
         "read_mapping_quality": "MAPQ>=20 retained",
         "workflow": {
           "engine": "nextflow",
@@ -772,16 +862,11 @@
         "file": "B2-0002.g.vcf.gz",
         "vcf_version": "4.3",
         "checksum": "sha256:<digest>",
-        "normalization": "fully-justified (GA4GH VRS)",
+        "normalization": "left-aligned, parsimonious (bcftools norm -f <GRCh38.fa>)",
         "variant_count": 4940000,
         "snv_count": 4150000,
         "indel_count": 790000,
-        "inferred_sex_karyotype": "XX",
-        "reference_stamps": {
-          "gnomad": "v4.1",
-          "clinvar": "2026-01-06",
-          "dbnsfp": "4.7a"
-        }
+        "inferred_sex_karyotype": "XX"
       },
       "genetic_ancestry": {
         "method": "PCA projection onto 1000 Genomes reference",
@@ -924,6 +1009,29 @@
           "container": "sha256:<digest>",
           "parameters": "--vc-emit-ref-confidence GVCF"
         },
+        "annotation": [
+          {
+            "resource": "gnomAD",
+            "version": "v4.1",
+            "info_fields": [
+              "<gnomAD allele-frequency fields>"
+            ]
+          },
+          {
+            "resource": "ClinVar",
+            "version": "2026-01-06",
+            "info_fields": [
+              "<ClinVar fields, e.g. CLNSIG>"
+            ]
+          },
+          {
+            "resource": "dbNSFP",
+            "version": "4.7a",
+            "info_fields": [
+              "<dbNSFP score fields>"
+            ]
+          }
+        ],
         "read_mapping_quality": "MAPQ>=20 retained",
         "workflow": {
           "engine": "nextflow",
@@ -963,16 +1071,11 @@
         "file": "B2-0003.g.vcf.gz",
         "vcf_version": "4.3",
         "checksum": "sha256:<digest>",
-        "normalization": "fully-justified (GA4GH VRS)",
+        "normalization": "left-aligned, parsimonious (bcftools norm -f <GRCh38.fa>)",
         "variant_count": 5162000,
         "snv_count": 4450000,
         "indel_count": 712000,
-        "inferred_sex_karyotype": "XY",
-        "reference_stamps": {
-          "gnomad": "v4.1",
-          "clinvar": "2026-01-06",
-          "dbnsfp": "4.7a"
-        }
+        "inferred_sex_karyotype": "XY"
       },
       "genetic_ancestry": {
         "method": "PCA projection onto 1000 Genomes reference",
