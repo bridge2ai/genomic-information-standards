@@ -109,6 +109,29 @@
         "container": "sha256:<digest>",
         "parameters": "<args>"
       },
+      "annotation": [
+        {
+          "resource": "gnomAD",
+          "version": "<release>",
+          "info_fields": [
+            "<gnomAD allele-frequency fields>"
+          ]
+        },
+        {
+          "resource": "ClinVar",
+          "version": "<snapshot date>",
+          "info_fields": [
+            "<ClinVar fields, e.g. CLNSIG>"
+          ]
+        },
+        {
+          "resource": "dbNSFP",
+          "version": "<release>",
+          "info_fields": [
+            "<dbNSFP score fields>"
+          ]
+        }
+      ],
       "analyses_performed": "<e.g. germline SNV/indel calling>",
       "read_mapping_quality": "<e.g. MAPQ>=20 retained>",
       "deviations": "<protocol deviations | none>",
@@ -153,25 +176,33 @@
       "file": "<sample.g.vcf.gz>",
       "vcf_version": "<4.2 | 4.3>",
       "checksum": "sha256:<digest>",
-      "normalization": "fully-justified (GA4GH VRS)",
+      "normalization": "<representation of the VCF rows, e.g. left-aligned, parsimonious (bcftools norm -f <ref>)>",
       "variant_count": "<int>",
       "snv_count": "<int>",
       "indel_count": "<int>",
       "inferred_sex_karyotype": "<XX | XY | ...>",
-      "variant_representation": [
-        {
-          "vrs_id": "<ga4gh:VA.* computed against the seqcol-pinned reference>",
-          "hgvs_g": "<GRCh38 g. HGVS expression>",
-          "variant_quality": "<QUAL>",
-          "total_depth": "<DP>",
-          "ref_supporting_reads": "<AD[0]>",
-          "alt_supporting_reads": "<AD[1]>"
+      "variant_representation": {
+        "vrs_allele_id": {
+          "location": "INFO/VRS_Allele_IDs",
+          "normalization": "fully-justified (GA4GH VRS)",
+          "tool": {
+            "name": "vrs-python",
+            "version": "<x.y.z>"
+          },
+          "reference_seqcol": "<seqcol digest>"
+        },
+        "hgvs_g": {
+          "location": "INFO/CSQ, subfield HGVSg"
+        },
+        "variant_quality": {
+          "location": "QUAL"
+        },
+        "total_depth": {
+          "location": "FORMAT/DP"
+        },
+        "allele_depths": {
+          "location": "FORMAT/AD"
         }
-      ],
-      "reference_stamps": {
-        "gnomad": "<release>",
-        "clinvar": "<snapshot date>",
-        "dbnsfp": "<release>"
       }
     },
     "genetic_ancestry": {

@@ -114,6 +114,10 @@ metadata_packages:
     processing:
       alignment:       { tool: "bwa-mem", tool_id: "biotools:bwa", version: "0.7.17", container: "sha256:<digest>", parameters: "-M -K 100000000" }
       variant_calling: { tool: "gatk-haplotypecaller", tool_id: "biotools:gatk", version: "4.4.0.0", container: "sha256:<digest>", parameters: "--ploidy 2 -ERC GVCF" }
+      annotation:                       # knowledge resources used to annotate the callset, and the INFO fields each populated
+        - { resource: "gnomAD",  version: "v4.1",       info_fields: ["<gnomAD allele-frequency fields>"] }
+        - { resource: "ClinVar", version: "2026-01-06", info_fields: ["<ClinVar fields, e.g. CLNSIG>"] }
+        - { resource: "dbNSFP",  version: "4.7a",       info_fields: ["<dbNSFP score fields>"] }
       read_mapping_quality: "MAPQ>=20 retained"
       workflow:        { engine: "nextflow", version: "24.04.0", run_id: "<uuid>", commit_sha: "<git sha>", provenance: "../../provenance/gs_align_call_run.provenance.yaml" }
     sequence_data:                                  # Table 2 MUST storage formats
@@ -125,19 +129,21 @@ metadata_packages:
       file: "B1-0001.g.vcf.gz"                      # gVCF (Table 2 MUST)
       vcf_version: "4.3"                            # gVCF min 4.2; 4.3 used
       checksum: "sha256:<digest>"
-      normalization: "fully-justified (GA4GH VRS)"  # VRS uses fully-justified normalization, NOT left-alignment
+      normalization: "left-aligned, parsimonious (bcftools norm -f <GRCh38.fa>)"   # the VCF rows themselves; VRS normalization applies only to VRS IDs (see variant_representation)
       variant_count: 4820000
       snv_count: 4180000
       indel_count: 640000                           # BWA-MEM/GATK arm (~6.5:1 SNV:indel)
       inferred_sex_karyotype: "XY"                  # per FairGenomes GenotypicSex (from the callset)
-      variant_representation:                       # GA4GH VRS - Table 6 MUST (one illustrative allele)
-        - vrs_id: "<ga4gh:VA.* - compute with vrs-python against the seqcol-pinned reference>"
-          hgvs_g: "<GRCh38 g. HGVS expression>"
-          variant_quality: 812.3                    # QUAL
-          total_depth: 42                           # DP
-          ref_supporting_reads: 21                  # AD[0]
-          alt_supporting_reads: 21                  # AD[1]
-      reference_stamps: { gnomad: "v4.1", clinvar: "2026-01-06", dbnsfp: "4.7a" }
+      variant_representation:                       # where the Table 6 MUST elements are carried in the callset (locations, not values)
+        vrs_allele_id:
+          location: "INFO/VRS_Allele_IDs"            # vrs-python VCF annotator; Number=R (REF + ALTs, GT-index order)
+          normalization: "fully-justified (GA4GH VRS)"
+          tool: { name: "vrs-python", version: "<x.y.z>" }
+          reference_seqcol: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3"
+        hgvs_g:          { location: "INFO/CSQ, subfield HGVSg" }   # VEP --hgvsg; vrs-python does not emit HGVS
+        variant_quality: { location: "QUAL" }
+        total_depth:     { location: "FORMAT/DP" }
+        allele_depths:   { location: "FORMAT/AD" }
     genetic_ancestry:
       method: "PCA projection onto 1000 Genomes reference"   # ancestry field per NCIT:C176763
       superpop_fractions: { AFR: 0.03, AMR: 0.05, EAS: 0.02, EUR: 0.88, SAS: 0.02 }   # arbitrary, unrelated to site
@@ -209,6 +215,10 @@ metadata_packages:
     processing:
       alignment:       { tool: "bwa-mem", tool_id: "biotools:bwa", version: "0.7.17", container: "sha256:<digest>", parameters: "-M -K 100000000" }
       variant_calling: { tool: "gatk-haplotypecaller", tool_id: "biotools:gatk", version: "4.4.0.0", container: "sha256:<digest>", parameters: "--ploidy 2 -ERC GVCF" }
+      annotation:                       # knowledge resources used to annotate the callset, and the INFO fields each populated
+        - { resource: "gnomAD",  version: "v4.1",       info_fields: ["<gnomAD allele-frequency fields>"] }
+        - { resource: "ClinVar", version: "2026-01-06", info_fields: ["<ClinVar fields, e.g. CLNSIG>"] }
+        - { resource: "dbNSFP",  version: "4.7a",       info_fields: ["<dbNSFP score fields>"] }
       read_mapping_quality: "MAPQ>=20 retained"
       workflow:        { engine: "nextflow", version: "24.04.0", run_id: "<uuid>", commit_sha: "<git sha>", provenance: "<path to this sample's W3C PROV record (same shape as ../../provenance/)>" }
     sequence_data:
@@ -220,12 +230,11 @@ metadata_packages:
       file: "B1-0002.g.vcf.gz"
       vcf_version: "4.3"
       checksum: "sha256:<digest>"
-      normalization: "fully-justified (GA4GH VRS)"
+      normalization: "left-aligned, parsimonious (bcftools norm -f <GRCh38.fa>)"   # the VCF rows themselves; VRS normalization applies only to VRS IDs (see variant_representation)
       variant_count: 4818000
       snv_count: 4180000
       indel_count: 638000                           # BWA-MEM/GATK arm
       inferred_sex_karyotype: "XX"
-      reference_stamps: { gnomad: "v4.1", clinvar: "2026-01-06", dbnsfp: "4.7a" }
     genetic_ancestry:
       method: "PCA projection onto 1000 Genomes reference"
       superpop_fractions: { AFR: 0.04, AMR: 0.05, EAS: 0.03, EUR: 0.06, SAS: 0.82 }   # arbitrary
@@ -294,6 +303,10 @@ metadata_packages:
     processing:
       alignment:       { tool: "dragmap", tool_id: null, version: "1.3.0", container: "sha256:<digest>", parameters: "--preserve-map-align-order true" }   # no bio.tools entry for DRAGMAP (checked)
       variant_calling: { tool: "dragen", tool_id: null, version: "4.2.4", container: "sha256:<digest>", parameters: "--vc-emit-ref-confidence GVCF" }        # no bio.tools entry for DRAGEN (checked)
+      annotation:                       # knowledge resources used to annotate the callset, and the INFO fields each populated
+        - { resource: "gnomAD",  version: "v4.1",       info_fields: ["<gnomAD allele-frequency fields>"] }
+        - { resource: "ClinVar", version: "2026-01-06", info_fields: ["<ClinVar fields, e.g. CLNSIG>"] }
+        - { resource: "dbNSFP",  version: "4.7a",       info_fields: ["<dbNSFP score fields>"] }
       read_mapping_quality: "MAPQ>=20 retained"
       workflow:        { engine: "nextflow", version: "24.04.0", run_id: "<uuid>", commit_sha: "<git sha>", provenance: "<path to this sample's W3C PROV record (same shape as ../../provenance/)>" }
     sequence_data:
@@ -305,12 +318,11 @@ metadata_packages:
       file: "B2-0001.g.vcf.gz"
       vcf_version: "4.3"
       checksum: "sha256:<digest>"
-      normalization: "fully-justified (GA4GH VRS)"
+      normalization: "left-aligned, parsimonious (bcftools norm -f <GRCh38.fa>)"   # the VCF rows themselves; VRS normalization applies only to VRS IDs (see variant_representation)
       variant_count: 5820000
       snv_count: 5000000                            # AFR-majority genome carries the most SNVs (ancestry)
       indel_count: 820000                           # DRAGEN caller effect + AFR-majority ancestry raises indel counts too (~+15%, like SNVs)
       inferred_sex_karyotype: "XY"
-      reference_stamps: { gnomad: "v4.1", clinvar: "2026-01-06", dbnsfp: "4.7a" }
     genetic_ancestry:
       method: "PCA projection onto 1000 Genomes reference"
       superpop_fractions: { AFR: 0.86, AMR: 0.05, EAS: 0.02, EUR: 0.05, SAS: 0.02 }   # arbitrary, unrelated to site
@@ -379,6 +391,10 @@ metadata_packages:
     processing:
       alignment:       { tool: "dragmap", tool_id: null, version: "1.3.0", container: "sha256:<digest>", parameters: "--preserve-map-align-order true" }   # no bio.tools entry for DRAGMAP (checked)
       variant_calling: { tool: "dragen", tool_id: null, version: "4.2.4", container: "sha256:<digest>", parameters: "--vc-emit-ref-confidence GVCF" }        # no bio.tools entry for DRAGEN (checked)
+      annotation:                       # knowledge resources used to annotate the callset, and the INFO fields each populated
+        - { resource: "gnomAD",  version: "v4.1",       info_fields: ["<gnomAD allele-frequency fields>"] }
+        - { resource: "ClinVar", version: "2026-01-06", info_fields: ["<ClinVar fields, e.g. CLNSIG>"] }
+        - { resource: "dbNSFP",  version: "4.7a",       info_fields: ["<dbNSFP score fields>"] }
       read_mapping_quality: "MAPQ>=20 retained"
       workflow:        { engine: "nextflow", version: "24.04.0", run_id: "<uuid>", commit_sha: "<git sha>", provenance: "<path to this sample's W3C PROV record (same shape as ../../provenance/)>" }
     sequence_data:
@@ -390,12 +406,11 @@ metadata_packages:
       file: "B2-0002.g.vcf.gz"
       vcf_version: "4.3"
       checksum: "sha256:<digest>"
-      normalization: "fully-justified (GA4GH VRS)"
+      normalization: "left-aligned, parsimonious (bcftools norm -f <GRCh38.fa>)"   # the VCF rows themselves; VRS normalization applies only to VRS IDs (see variant_representation)
       variant_count: 4940000
       snv_count: 4150000                            # EAS-majority genome (see ancestry below)
       indel_count: 790000                           # DRAGEN caller effect PLUS a further 4-channel chemistry increment (both covariates recorded)
       inferred_sex_karyotype: "XX"
-      reference_stamps: { gnomad: "v4.1", clinvar: "2026-01-06", dbnsfp: "4.7a" }
     genetic_ancestry:
       method: "PCA projection onto 1000 Genomes reference"
       superpop_fractions: { AFR: 0.03, AMR: 0.04, EAS: 0.85, EUR: 0.06, SAS: 0.02 }   # arbitrary, unrelated to chemistry
@@ -463,6 +478,10 @@ metadata_packages:
     processing:
       alignment:       { tool: "dragmap", tool_id: null, version: "1.3.0", container: "sha256:<digest>", parameters: "--preserve-map-align-order true" }   # no bio.tools entry for DRAGMAP (checked)
       variant_calling: { tool: "dragen", tool_id: null, version: "4.2.4", container: "sha256:<digest>", parameters: "--vc-emit-ref-confidence GVCF" }        # no bio.tools entry for DRAGEN (checked)
+      annotation:                       # knowledge resources used to annotate the callset, and the INFO fields each populated
+        - { resource: "gnomAD",  version: "v4.1",       info_fields: ["<gnomAD allele-frequency fields>"] }
+        - { resource: "ClinVar", version: "2026-01-06", info_fields: ["<ClinVar fields, e.g. CLNSIG>"] }
+        - { resource: "dbNSFP",  version: "4.7a",       info_fields: ["<dbNSFP score fields>"] }
       read_mapping_quality: "MAPQ>=20 retained"
       workflow:        { engine: "nextflow", version: "24.04.0", run_id: "<uuid>", commit_sha: "<git sha>", provenance: "<path to this sample's W3C PROV record (same shape as ../../provenance/)>" }
     sequence_data:
@@ -474,12 +493,11 @@ metadata_packages:
       file: "B2-0003.g.vcf.gz"
       vcf_version: "4.3"
       checksum: "sha256:<digest>"
-      normalization: "fully-justified (GA4GH VRS)"
+      normalization: "left-aligned, parsimonious (bcftools norm -f <GRCh38.fa>)"   # the VCF rows themselves; VRS normalization applies only to VRS IDs (see variant_representation)
       variant_count: 5162000
       snv_count: 4450000                            # AMR-majority (admixed) genome
       indel_count: 712000                           # DRAGEN arm runs higher indel counts than the GATK arm (caller effect)
       inferred_sex_karyotype: "XY"
-      reference_stamps: { gnomad: "v4.1", clinvar: "2026-01-06", dbnsfp: "4.7a" }
     genetic_ancestry:
       method: "PCA projection onto 1000 Genomes reference"
       superpop_fractions: { AFR: 0.05, AMR: 0.80, EAS: 0.03, EUR: 0.10, SAS: 0.02 }   # arbitrary
