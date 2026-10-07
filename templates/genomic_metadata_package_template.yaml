@@ -27,6 +27,7 @@ prefixes:                                   # CURIE -> base IRI (expansion = bas
 metadata_package:
   package_id: "<namespace:sample-id>"
   schema_version: "<x.y.z>"
+  contents: ["reads", "alignment", "variant_calls"]   # what this package holds; determines which blocks the schema requires
   study:
     bioproject: "<BioProject accession | ->"
     assay: "<whole genome sequencing | whole exome sequencing | targeted panel>"
@@ -91,7 +92,7 @@ metadata_package:
   # --- REFERENCE (Refget Sequence Collections) ------------------------------
   reference_assembly:
     label: "<assembly label with exact sequence order, e.g. GRCh38 ... chr1-chr22, chrM, chrX, chrY>"
-    seqcol_digest: "<GA4GH seqcol top-level digest, e.g. Ba88PY52_qeifhJrgUXyin6UITdXNsg3>"   # bare, no SQ. prefix; order-sensitive
+    seqcol_digest: "<GA4GH seqcol top-level digest, e.g. Ba88PY52_qeifhJrgUXyin6UITdXNsg3>"   # bare, no SQ. prefix; order-sensitive; if not established: null + seqcol_digest_note giving the reason
     source_uri: "<URI of the exact reference FASTA used>"     # Table 3 MUST: pointer to source file (per FairGenomes GenomeAccessions)
     source_checksum: "md5:<fasta-md5>"
 

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/bridge2ai/genomic-information-standards/blob/main/schemas/genomic_metadata_package_v0.1.0.json",
   "title": "GIST AI-ready genomic metadata package (v0.1.0)",
-  "description": "Draft schema for the example metadata packages under examples/. A file carries either a single `metadata_package` (exactly one package) or a list of `metadata_packages` (two or more) — the singular/list choice is purely about count, since assay type is recorded per package in `study.assay`. Only core, stable fields are constrained; packages may carry additional fields. The template is intentionally NOT valid against this schema (its <placeholder> values are strings where integers are required).",
+  "description": "Draft schema for the example metadata packages under examples/. A file carries either a single `metadata_package` (exactly one package) or a list of `metadata_packages` (two or more) — the singular/list choice is purely about count, since assay type is recorded per package in `study.assay`. Each package declares its `contents` (reads, alignment, variant_calls, reference_sequence, feature_annotation), and only the blocks those contents need are required, so a single-file package (e.g. a BAM or a reference FASTA) does not carry placeholder blocks. Only core, stable fields are constrained; packages may carry additional fields. The template is intentionally NOT valid against this schema (its <placeholder> values are strings where integers are required).",
   "type": "object",
   "anyOf": [
     { "required": ["metadata_package"] },
@@ -31,13 +31,29 @@
     },
     "package": {
       "type": "object",
-      "required": [
-        "package_id", "schema_version", "study", "sample",
-        "sequencing", "reference_assembly", "variant_callset"
+      "required": ["package_id", "schema_version", "study", "contents"],
+      "allOf": [
+        { "if": { "properties": { "contents": { "contains": { "const": "reads" } } } },
+          "then": { "required": ["sample", "sequencing"] } },
+        { "if": { "properties": { "contents": { "contains": { "const": "alignment" } } } },
+          "then": { "required": ["sample", "sequencing", "reference_assembly"] } },
+        { "if": { "properties": { "contents": { "contains": { "const": "variant_calls" } } } },
+          "then": { "required": ["sample", "reference_assembly", "variant_callset"] } },
+        { "if": { "properties": { "contents": { "contains": { "const": "reference_sequence" } } } },
+          "then": { "required": ["reference_assembly"] } },
+        { "if": { "properties": { "contents": { "contains": { "const": "feature_annotation" } } } },
+          "then": { "required": ["reference_assembly"] } }
       ],
       "properties": {
         "package_id": { "type": "string" },
         "schema_version": { "type": "string" },
+        "contents": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["reads", "alignment", "variant_calls", "reference_sequence", "feature_annotation"] },
+          "description": "What this package holds. Determines which blocks are required: reads -> sample, sequencing; alignment -> sample, sequencing, reference_assembly; variant_calls -> sample, reference_assembly, variant_callset; reference_sequence or feature_annotation -> reference_assembly. A block that is present is validated whether or not it is required."
+        },
         "study": {
           "type": "object",
           "required": ["assay", "assay_id"],
@@ -59,11 +75,14 @@
           "required": ["seqcol_digest"],
           "properties": {
             "seqcol_digest": {
-              "type": "string",
+              "type": ["string", "null"],
               "pattern": "^[A-Za-z0-9_-]{32}$",
-              "description": "GA4GH Refget Sequence Collections top-level digest (bare, no SQ. prefix)."
-            }
-          }
+              "description": "GA4GH Refget Sequence Collections top-level digest (bare, no SQ. prefix). null when the exact reference collection has not been established; `seqcol_digest_note` must then say why. Never substitute another collection's digest."
+            },
+            "seqcol_digest_note": { "type": "string", "minLength": 1 }
+          },
+          "if": { "properties": { "seqcol_digest": { "type": "null" } }, "required": ["seqcol_digest"] },
+          "then": { "required": ["seqcol_digest_note"] }
         },
         "variant_callset": {
           "type": "object",

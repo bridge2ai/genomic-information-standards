@@ -15,6 +15,11 @@
   "metadata_package": {
     "package_id": "<namespace:sample-id>",
     "schema_version": "<x.y.z>",
+    "contents": [
+      "reads",
+      "alignment",
+      "variant_calls"
+    ],
     "study": {
       "bioproject": "<BioProject accession | ->",
       "assay": "<whole genome sequencing | whole exome sequencing | targeted panel>",

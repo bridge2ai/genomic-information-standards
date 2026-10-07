@@ -33,6 +33,7 @@ prefixes:                                   # CURIE -> base IRI
 metadata_package:
   package_id: "GIST-PANEL-EX:0001"
   schema_version: "0.1.0"
+  contents: ["reads", "alignment", "variant_calls"]   # what this package holds; determines which blocks the schema requires
   study: { bioproject: "<BioProject accession>", assay: "targeted panel sequencing", assay_id: "NCIT:C173599" }   # Disease Panel Gene Sequencing
 
   subject:
