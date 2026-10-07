@@ -4,7 +4,7 @@
   "title": "GIST AI-ready genomic metadata package (v0.1.0)",
   "description": "Draft schema for the example metadata packages under examples/. A file carries either a single `metadata_package` (exactly one package) or a list of `metadata_packages` (two or more) — the singular/list choice is purely about count, since assay type is recorded per package in `study.assay`. Only core, stable fields are constrained; packages may carry additional fields. The template is intentionally NOT valid against this schema (its <placeholder> values are strings where integers are required).",
   "type": "object",
-  "anyOf": [
+  "oneOf": [
     { "required": ["metadata_package"] },
     { "required": ["metadata_packages"] }
   ],
