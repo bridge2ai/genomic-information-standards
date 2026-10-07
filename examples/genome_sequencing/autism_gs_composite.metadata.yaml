@@ -80,6 +80,7 @@ metadata_packages:
   # -- B1-0001: B1, blood, 2-channel (NovaSeq 6000), BWA-MEM/GATK -------------
   - package_id: "GIST-GS-EX:B1-0001"
     schema_version: "0.1.0"
+    contents: ["reads", "alignment", "variant_calls"]   # what this package holds; determines which blocks the schema requires
     study: { bioproject: "<BioProject accession>", assay: "whole genome sequencing", assay_id: "OBI:0002117" }
     subject:
       subject_id: "B1-0001"
@@ -181,6 +182,7 @@ metadata_packages:
   #    (saliva on GOOD chemistry -> saliva is not tied to the 4-channel arm)
   - package_id: "GIST-GS-EX:B1-0002"
     schema_version: "0.1.0"
+    contents: ["reads", "alignment", "variant_calls"]   # what this package holds; determines which blocks the schema requires
     study: { bioproject: "<BioProject accession>", assay: "whole genome sequencing", assay_id: "OBI:0002117" }
     subject:
       subject_id: "B1-0002"
@@ -269,6 +271,7 @@ metadata_packages:
   #    (AFR-majority ancestry on GOOD chemistry -> ancestry not tied to a "worse" arm)
   - package_id: "GIST-GS-EX:B2-0001"
     schema_version: "0.1.0"
+    contents: ["reads", "alignment", "variant_calls"]   # what this package holds; determines which blocks the schema requires
     study: { bioproject: "<BioProject accession>", assay: "whole genome sequencing", assay_id: "OBI:0002117" }
     subject:
       subject_id: "B2-0001"
@@ -357,6 +360,7 @@ metadata_packages:
   #    (4-channel on BLOOD -> chemistry effect is separable from specimen)
   - package_id: "GIST-GS-EX:B2-0002"
     schema_version: "0.1.0"
+    contents: ["reads", "alignment", "variant_calls"]   # what this package holds; determines which blocks the schema requires
     study: { bioproject: "<BioProject accession>", assay: "whole genome sequencing", assay_id: "OBI:0002117" }
     subject:
       subject_id: "B2-0002"
@@ -444,6 +448,7 @@ metadata_packages:
   # -- B2-0003: B2, SALIVA, 2-channel (NovaSeq 6000), DRAGMAP/DRAGEN ----------
   - package_id: "GIST-GS-EX:B2-0003"
     schema_version: "0.1.0"
+    contents: ["reads", "alignment", "variant_calls"]   # what this package holds; determines which blocks the schema requires
     study: { bioproject: "<BioProject accession>", assay: "whole genome sequencing", assay_id: "OBI:0002117" }
     subject:
       subject_id: "B2-0003"
