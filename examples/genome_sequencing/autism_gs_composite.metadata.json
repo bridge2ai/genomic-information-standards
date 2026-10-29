@@ -62,6 +62,11 @@
     {
       "package_id": "GIST-GS-EX:B1-0001",
       "schema_version": "0.1.0",
+      "contents": [
+        "reads",
+        "alignment",
+        "variant_calls"
+      ],
       "study": {
         "bioproject": "<BioProject accession>",
         "assay": "whole genome sequencing",
@@ -311,6 +316,11 @@
     {
       "package_id": "GIST-GS-EX:B1-0002",
       "schema_version": "0.1.0",
+      "contents": [
+        "reads",
+        "alignment",
+        "variant_calls"
+      ],
       "study": {
         "bioproject": "<BioProject accession>",
         "assay": "whole genome sequencing",
@@ -520,6 +530,11 @@
     {
       "package_id": "GIST-GS-EX:B2-0001",
       "schema_version": "0.1.0",
+      "contents": [
+        "reads",
+        "alignment",
+        "variant_calls"
+      ],
       "study": {
         "bioproject": "<BioProject accession>",
         "assay": "whole genome sequencing",
@@ -729,6 +744,11 @@
     {
       "package_id": "GIST-GS-EX:B2-0002",
       "schema_version": "0.1.0",
+      "contents": [
+        "reads",
+        "alignment",
+        "variant_calls"
+      ],
       "study": {
         "bioproject": "<BioProject accession>",
         "assay": "whole genome sequencing",
@@ -938,6 +958,11 @@
     {
       "package_id": "GIST-GS-EX:B2-0003",
       "schema_version": "0.1.0",
+      "contents": [
+        "reads",
+        "alignment",
+        "variant_calls"
+      ],
       "study": {
         "bioproject": "<BioProject accession>",
         "assay": "whole genome sequencing",

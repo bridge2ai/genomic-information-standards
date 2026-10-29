@@ -9,6 +9,7 @@ prefixes:
 metadata_package:
   package_id: "GIST-BAM-EX:0001"
   schema_version: "0.1.0"
+  contents: ["alignment"]   # what this package holds; determines which blocks the schema requires
   title: "HG002 Illumina GRCh38 regional BAM exemplar"
   resource_type: "sequence alignment"
   format: "BAM"
@@ -63,24 +64,12 @@ metadata_package:
       read_groups: "Inspect @RG records in the BAM header"
       sample_identifier: "Inspect SM tags in @RG records"
 
-  variant_callset:
-    file: "not applicable"
-    vcf_version: "not applicable"
-    checksum: "not applicable"
-    normalization: "not applicable"
-    variant_count: 0
-    snv_count: 0
-    indel_count: 0
-    inferred_sex_karyotype: "not applicable"
-    description: >-
-      This BAM exemplar contains sequence alignments only and does not include
-      a sample-level variant callset.
-
   reference_assembly:
     label: "GRCh38"
     sequence_naming: "UCSC-style chr names"
     embedded_metadata: "@SQ records contain reference names and lengths"
-    seqcol_digest: "Ba88PY52_qeifhJrgUXyin6UITdXNsg3" # Placeholder for schema validation only; the exact reference collection digest has not been established.
+    seqcol_digest: null
+    seqcol_digest_note: "The exact reference collection digest has not been established."
     exact_reference_uri: null
     exact_reference_note: >-
       The exact reference artifact should be identified through the upstream

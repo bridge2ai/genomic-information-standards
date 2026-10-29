@@ -29,6 +29,7 @@ prefixes:                                   # CURIE -> base IRI
 metadata_package:
   package_id: "GIST-ES-EX:0001"
   schema_version: "0.1.0"
+  contents: ["reads", "alignment", "variant_calls"]   # what this package holds; determines which blocks the schema requires
   study: { bioproject: "<BioProject accession>", assay: "whole exome sequencing", assay_id: "OBI:0002118" }
 
   subject:

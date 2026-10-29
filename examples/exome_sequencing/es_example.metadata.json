@@ -13,6 +13,11 @@
   "metadata_package": {
     "package_id": "GIST-ES-EX:0001",
     "schema_version": "0.1.0",
+    "contents": [
+      "reads",
+      "alignment",
+      "variant_calls"
+    ],
     "study": {
       "bioproject": "<BioProject accession>",
       "assay": "whole exome sequencing",

@@ -10,6 +10,9 @@
     "metadata_package": {
         "package_id": "GIST-CRAM-EX:0001",
         "schema_version": "0.1.0",
+        "contents": [
+            "alignment"
+        ],
         "title": "NA12878 Oxford Nanopore GRCh38 regional CRAM example",
         "resource_type": "sequence alignment",
         "format": "CRAM",
@@ -81,22 +84,12 @@
                 }
             ]
         },
-        "variant_callset": {
-            "file": "not applicable",
-            "vcf_version": "not applicable",
-            "checksum": "not applicable",
-            "normalization": "not applicable",
-            "variant_count": 0,
-            "snv_count": 0,
-            "indel_count": 0,
-            "inferred_sex_karyotype": "not applicable",
-            "description": "This CRAM exemplar contains sequence alignments only and does not include a sample-level variant callset."
-        },
         "reference_assembly": {
             "label": "GRCh38",
             "sequence_naming": "UCSC-style chr names",
             "embedded_metadata": "@SQ records contain sequence names, lengths, and M5 sequence MD5 checksums",
-            "seqcol_digest": "Ba88PY52_qeifhJrgUXyin6UITdXNsg3",
+            "seqcol_digest": null,
+            "seqcol_digest_note": "The exact reference collection digest has not been established.",
             "producer_reference_uri": "/scratch/rausch/remap2/hg38.fa",
             "producer_reference_uri_resolvable": false,
             "portability_note": "The producer-local reference path is retained as provenance but is not portable. Consumers should resolve and verify reference sequences using the @SQ M5 checksums."

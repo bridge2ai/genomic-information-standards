@@ -2,7 +2,8 @@ name: validate-metadata
 
 # Validates the example metadata packages against the JSON Schema, checks that
 # every YAML/JSON twin (examples, template, provenance) is semantically identical,
-# and cross-checks per-package arithmetic (snv + indel == variant_count) and
+# and cross-checks per-package arithmetic (snv + indel == variant_count, when a
+# variant_callset is present) and
 # ancestry fractions (sum ~ 1.0).
 
 on:
@@ -61,8 +62,8 @@ jobs:
                   fails.append(f"{y}: no metadata_package(s) root key")
                   continue
               for p in pkgs:
-                  vc = p["variant_callset"]
-                  if vc["snv_count"] + vc["indel_count"] != vc["variant_count"]:
+                  vc = p.get("variant_callset")   # required only when contents include variant_calls
+                  if vc and vc["snv_count"] + vc["indel_count"] != vc["variant_count"]:
                       fails.append(f'{p["package_id"]}: snv+indel != variant_count')
                   ga = p.get("genetic_ancestry")
                   if ga and abs(sum(ga["superpop_fractions"].values()) - 1.0) > 1e-6:
